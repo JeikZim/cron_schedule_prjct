@@ -1,0 +1,36 @@
+
+
+& .types
+    width: 100%
+    margin-top: math.div($block-ver-padding, 2)
+
+    & .item
+        $radio-outline-sz: 4px
+        $radio-outline: $radio-outline-sz solid $radio-color
+        $radio-circle: 12px + 2 * $radio-outline-sz
+        $radio-border-active: 2.5px + $radio-outline-sz solid #e6e6e6
+
+        display: flex
+        justify-content: flex-start
+        align-items: center
+
+        padding-bottom: $std-ver-padding
+        padding-left: $std-hor-padding
+
+        & label
+            margin-left: 10px
+            font-size: 18px
+            font-weight: 500
+
+        & .radio
+            outline: $radio-outline
+            outline-offset: -1 * $radio-outline-sz + 0.5px
+            background-color: white
+            border-radius: 50%
+            box-sizing: border-box
+            width: $radio-circle
+            height: $radio-circle
+
+            &.active
+                border: $radio-border-active
+                background-color: $radio-color

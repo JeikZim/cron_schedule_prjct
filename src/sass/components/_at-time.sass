@@ -1,0 +1,90 @@
+.at-time
+    $at-time-item-padding: 12px
+    font-weight: 500
+    height: calc( $schedule-height - 3*$block-ver-padding - math.div($schedule-header, 1.5) - $schedule-header)
+    overflow-y: scroll
+
+    &::-webkit-scrollbar
+        background: none
+        width: 8px
+
+    &::-webkit-scrollbar-thumb
+        background-color: #ffffff3b
+        border-radius: 25px
+        width: 8px
+
+    & > .title
+        position: sticky
+        top: 0
+
+        padding-bottom: $at-time-item-padding
+
+        z-index: 5
+        font-size: 24px
+
+        border-bottom: 1px solid $radio-color
+        background-color: $schedule-bg
+    
+    &-list
+
+        position: relative
+        padding-bottom: $schedule-header
+        font-size: 18px
+
+        & .item
+            $at-time-item-heigth: 48px
+
+            display: flex
+            justify-content: space-between
+            align-content: center
+
+            box-sizing: border-box
+
+            height: $at-time-item-heigth
+            padding: 0 $at-time-item-padding
+
+            border-bottom: 1px solid $radio-color
+
+            & .title 
+                user-select: none
+                display: flex
+                justify-content: center
+                align-items: center
+                width: 48px
+
+
+            & label
+                display: flex
+                justify-content: space-evenly
+                align-items: center
+                width: 50%
+
+            & input
+                width: $at-time-item-heigth
+                height: 100%
+
+                font-size: 24px
+                font-weight: 600
+                text-align: center
+                color: $main-color
+
+            & .btn-div 
+                display: flex
+                justify-content: center
+                align-items: center
+                height: 100%
+                width: $at-time-item-heigth
+                padding-left: $at-time-item-heigth
+
+                & svg
+                    height: 75%
+                    width: 75%
+
+                
+
+        & .add
+            position: absolute
+            bottom: 0
+
+            & .btn-div
+

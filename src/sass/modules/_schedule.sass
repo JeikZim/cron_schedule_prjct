@@ -1,0 +1,45 @@
+@import '../components/_each-min'
+@import '../components/_at-time'
+
+.schedule
+    border-radius: $schedule-radius
+    width: $container-width
+    height: $schedule-height
+
+    background-color: $schedule-bg
+
+    & header
+        display: flex
+        justify-content: flex-start
+        align-items: center
+
+        height: $schedule-header
+        width: 100%
+
+        border-top-right-radius: $schedule-radius
+        border-top-left-radius: $schedule-radius
+
+        background-color: $schedule-header-bg
+
+        & .text
+            margin-left: 24px
+
+            font-size: 36px
+
+    & .sidebar
+        height: calc( 100% - $schedule-header - 2 * $block-ver-padding )
+        width: calc(math.div($container-width, 5))
+
+        box-sizing: border-box
+        margin: math.div($block-ver-padding, 1.5)  0
+        margin-bottom: $block-ver-padding
+        border-right: 1px solid $radio-color
+        @import  '../components/_types'
+
+    & .content
+        height: calc(100% - $schedule-header)
+        width: calc($container-width - math.div($container-width, 5))
+
+        box-sizing: border-box
+        padding: 0 $std-hor-padding $block-ver-padding
+        

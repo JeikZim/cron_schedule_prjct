@@ -1,0 +1,303 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, section, summary,
+time, mark, input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+input:focus {
+  outline: none;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+button {
+  border: none;
+}
+
+span, p, h1, h2, h3, label, input, select, option, button {
+  font-family: "Montserrat", sans-serif;
+  color: #fff;
+}
+
+body {
+  background-color: #eeeeee;
+}
+
+label {
+  user-select: none;
+}
+
+input {
+  background-color: rgba(0, 0, 0, 0.4470588235);
+}
+
+.container {
+  width: 720px;
+  margin: auto;
+  margin-top: 36px;
+}
+
+.schedule {
+  position: relative;
+  margin-bottom: 24px;
+}
+.schedule .sidebar {
+  position: absolute;
+  top: 72px;
+  left: 0;
+}
+.schedule .content {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.each-min {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  width: 100%;
+  height: 48px;
+  padding: 24px 0;
+}
+.each-min label {
+  font-size: 24px;
+  font-weight: 500;
+}
+.each-min label input {
+  color: #eaeaea;
+  text-align: center;
+  width: 48px;
+  border-radius: 5px;
+}
+.each-min label input:focus {
+  outline: none;
+}
+
+.at-time {
+  font-weight: 500;
+  height: 288px;
+  overflow-y: scroll;
+}
+.at-time::-webkit-scrollbar {
+  background: none;
+  width: 8px;
+}
+.at-time::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.231372549);
+  border-radius: 25px;
+  width: 8px;
+}
+.at-time > .title {
+  position: sticky;
+  top: 0;
+  padding-bottom: 12px;
+  z-index: 5;
+  font-size: 24px;
+  border-bottom: 1px solid #282828;
+  background-color: #4c4c4c;
+}
+.at-time-list {
+  position: relative;
+  padding-bottom: 72px;
+  font-size: 18px;
+}
+.at-time-list .item {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 12px;
+  border-bottom: 1px solid #282828;
+}
+.at-time-list .item .title {
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+}
+.at-time-list .item label {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 50%;
+}
+.at-time-list .item input {
+  width: 48px;
+  height: 100%;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+}
+.at-time-list .item .btn-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 48px;
+  padding-left: 48px;
+}
+.at-time-list .item .btn-div svg {
+  height: 75%;
+  width: 75%;
+}
+.at-time-list .add {
+  position: absolute;
+  bottom: 0;
+}
+.schedule {
+  border-radius: 25px;
+  width: 720px;
+  height: 480px;
+  background-color: #4c4c4c;
+}
+.schedule header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 72px;
+  width: 100%;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  background-color: #2e2e2e;
+}
+.schedule header .text {
+  margin-left: 24px;
+  font-size: 36px;
+}
+.schedule .sidebar {
+  height: calc(100% - 72px - 48px);
+  width: 144px;
+  box-sizing: border-box;
+  margin: 16px 0;
+  margin-bottom: 24px;
+  border-right: 1px solid #282828;
+}
+.schedule .sidebar .types {
+  width: 100%;
+  margin-top: 12px;
+}
+.schedule .sidebar .types .item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 12px;
+  padding-left: 16px;
+}
+.schedule .sidebar .types .item label {
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.schedule .sidebar .types .item .radio {
+  outline: 4px solid #282828;
+  outline-offset: -3.5px;
+  background-color: white;
+  border-radius: 50%;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+}
+.schedule .sidebar .types .item .radio.active {
+  border: 6.5px solid #e6e6e6;
+  background-color: #282828;
+}
+.schedule .content {
+  height: calc(100% - 72px);
+  width: 576px;
+  box-sizing: border-box;
+  padding: 0 16px 24px;
+}
+
+.btn {
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 0.25em;
+  background-color: #aadeb4;
+}
+
+.btn:hover {
+  background-color: #8cf4a1;
+}
+
+.btn:active {
+  background-color: #36ff5e;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 720px;
+  height: 48px;
+  margin-bottom: 24px;
+}
+
+.btn-group > .btn-div {
+  width: 128px;
+  height: 100%;
+}
+
+.cron {
+  border-radius: 7px;
+  width: 720px;
+  height: 48px;
+  background-color: #4c4c4c;
+}
+.cron input {
+  background: none;
+  box-sizing: border-box;
+  padding: 0 16px;
+  width: 100%;
+  height: 100%;
+}
+.cron input:focus {
+  outline: none;
+  border: none;
+}
+
+.is-hidden {
+  display: none;
+}
