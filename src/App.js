@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import Schedule from './components/Schedule'
+import CronLine from './components/CronLine'
+import Button from './components/Button'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const load = () => {
+
+    }
+
+    const save = () => {
+        
+    }
+
+    return (
+        <div className="container">
+            <Schedule />
+            <div className="btn-group">
+                <Button name='Load' onClick={load} />
+                <Button name='Save' onClick={save} />
+            </div>
+            <CronLine />
+        </div>
+    )
 }
 
 export default App;
