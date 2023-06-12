@@ -1,5 +1,4 @@
-@import '../components/_each-min'
-@import '../components/_at-time'
+@import ../components/radio
 
 .schedule
     border-radius: $schedule-radius
@@ -27,12 +26,15 @@
             font-size: 36px
 
     & .sidebar
-        height: calc( 100% - $schedule-header - 2 * $block-ver-padding )
+        $margin-top: math.div($block-ver-padding, 1.5)
+        $margin-bottom: $block-ver-padding
+
+        height: calc( 100% - $schedule-header - $margin-bottom - $margin-top )
         width: calc(math.div($container-width, 5))
 
         box-sizing: border-box
-        margin: math.div($block-ver-padding, 1.5)  0
-        margin-bottom: $block-ver-padding
+        margin-top:  $margin-top
+        margin-bottom: $margin-bottom
         border-right: 1px solid $radio-color
         @import  '../components/_types'
 

@@ -1,15 +1,19 @@
-
 .each-min
     display: flex
-    justify-content: start
-    align-items: flex-start
+    justify-content: flex-start
+    align-items: center
 
     width: 100%
-    height: math.div($schedule-header, 1.5)
+    height: math.div($schedule-header, 2)
     
     padding: $block-ver-padding 0 
+    
+    .radio
+        margin-left: 2px
+        margin-right: 12px
 
     & label
+        position: relative
         font-size: 24px
         font-weight: 500
 

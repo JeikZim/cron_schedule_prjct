@@ -1,106 +1,131 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../Button";
+import { setScheduleMode } from "../../../states/scheduleType";
+import { addTime, removeTime, setTime } from "../../../states/timesList";
 import { ReactComponent as TrashIcon } from "../../../assets/trash_icon.svg";
-import { addTime, removeTime } from "../../../states/timesList";
 
 export const AtTimeItem = (props) => {
-    const [time, setTime] = useState({
-        hours: props.hours,
-        minutes: props.minutes,
-    });
+    const id = props.id;
+    const minutesInputDOM = document.getElementById("at-time-minutes" + id);
+    const time = useSelector((state) => state.timesList.value[id - 1]);
+    const dispatch = useDispatch();
 
-    function timeInput(maxVal, maxLength, timeType) {
-        return (ev) => {
-            const val = ev.target.value.replace(/[^0-9]/, "");
+    const changeHoursHandler = (ev) => {
+        const val = ev.target.value.replace(/[^0-9]/, "");
+        const minutes = time.minutes;
 
-            if (val.length > maxLength) {
-                if (Number(val) === 0) {
-                    setTime({ ...time, [timeType]: "00" });
-                } else {
-                    if (timeType === "hours") {
-                        let minutes = val[val.length - 1]; //(val[val.length - 1] + time.minutes).slice(0, 2)
-                        const hours = val.slice(0, 2);
-
-                        // minutes = minutes > 59 ? 59 : minutes;
-                        setTime({ minutes, hours });
-                    } else {
-                        setTime({
-                            ...time,
-                            [timeType]: val.slice(0, maxLength),
-                        });
-                    }
-                }
-            } else if (Number(val) > maxVal) {
-                setTime({ ...time, [timeType]: maxVal });
+        if (val.length > 2) {
+            if (Number(val) === 0) {
+                dispatch(setTime({ id, hours: "00", minutes }));
             } else {
-                setTime({ ...time, [timeType]: val });
-            }
+                const minutes = val[val.length - 1];
+                const hours = val.slice(0, 2);
 
-            if (val.length > maxLength) {
-                if (timeType === "hours") {
-                    document.getElementById("AtTimeMinutes").focus();
-                } else {
-                    document.getElementById("AtTimeMinutes").blur();
-                }
+                dispatch(setTime({ id, hours, minutes }));
             }
+        } else if (Number(val) > 23) {
+            dispatch(setTime({ id, hours: 23, minutes }));
+        } else {
+            dispatch(setTime({ id, hours: val, minutes }));
+        }
+
+        val.length >= 2 && minutesInputDOM.focus();
+    };
+
+    const changeMinutesHandler = (ev) => {
+        const val = ev.target.value.replace(/[^0-9]/, "");
+        const hours = time.hours;
+
+        if (val.length > 2) {
+            if (Number(val) === 0) {
+                dispatch(setTime({ id, hours, minutes: "00" }));
+            } else {
+                dispatch(setTime({ id, hours, minutes: val.slice(0, 2) }));
+            }
+        } else if (Number(val) > 59) {
+            dispatch(setTime({ id, hours, minutes: 59 }));
+        } else {
+            dispatch(setTime({ id, hours, minutes: val }));
+        }
+
+        val.length > 2 && minutesInputDOM.blur();
+    };
+
+    const removeHandler = (ev) => dispatch(removeTime({ id }));
+
+    const changeFocusByEnter = (action) => {
+        return (ev) => ev.code === "Enter" && minutesInputDOM[action]();
+    };
+
+    const makeBlurHandler = (timeType) => {
+        return (ev) => {
+            const val = ev.target.value;
+            (val === "0" || val === "") &&
+                dispatch(setTime({ ...time, [timeType]: "00" }));
         };
-    }
+    };
 
     return (
-        <div key={props.id} className="item at-time__item">
-            <h2 className="title">№{props.id}</h2>
+        <div key={id} className="item at-time__item">
+            <h2 className="title">№{id}</h2>
             <label htmlFor="AtTimeHours">
                 At
                 <input
-                    id="AtTimeHours"
+                    id={"at-time-hours" + id}
+                    className={props.isActive ? "" : "is-disabled"} 
                     type="text"
                     value={time.hours}
-                    onChange={timeInput(23, 2, "hours")}
+                    onChange={changeHoursHandler}
+                    onKeyDown={changeFocusByEnter("focus")}
+                    onBlur={makeBlurHandler("hours")}
                 />
                 :
                 <input
-                    id="AtTimeMinutes"
+                    id={"at-time-minutes" + id}
+                    className={props.isActive ? "" : "is-disabled"} 
                     type="text"
                     value={time.minutes}
-                    onChange={timeInput(59, 2, "minutes")}
+                    onChange={changeMinutesHandler}
+                    onKeyDown={changeFocusByEnter("blur")}
+                    onBlur={makeBlurHandler("minutes")}
                 />
             </label>
-            <div className="btn-div" onClick={props.onRemove}>
-                <TrashIcon className="" alt="Trash icon" />
+            <div className="btn-div" onClick={removeHandler}>
+                <TrashIcon className={props.isActive ? "" : "is-disabled"} alt="Trash icon" />
             </div>
         </div>
     );
 };
 
-export const AtTimeList = () => {
+export const AtTimeList = (props) => {
     const timesList = useSelector((state) => state.timesList.value);
     const dispatch = useDispatch();
 
     const addHandler = (ev) => {
         const len = timesList.length;
+
         const id = len > 0 ? timesList[len - 1].id + 1 : 1;
-        dispatch(addTime({ id, hours: "", minutes: "" }));
-    };
-    
-    const makeRemoveHandler = (id) => {
-        return (ev) => {
-            dispatch(removeTime({id}))
-        }
+        dispatch(addTime({ id, hours: "00", minutes: "00" }));
     };
 
     return (
         <div className="at-time-list">
+            {props.isActive ? true : <div className="locker" />}
             <div className="add">
-                <Button name="Add" onClick={addHandler} />
+                <Button
+                    isActive={props.isActive}
+                    name="Add"
+                    onClick={addHandler}
+                />
             </div>
             {timesList.map((item) => (
                 <AtTimeItem
+                    isActive={props.isActive}
                     key={item.id}
                     id={item.id}
                     hours={item.hours}
                     minutes={item.minutes}
-                    onRemove={makeRemoveHandler(item.id)}
                 />
             ))}
         </div>
@@ -108,10 +133,21 @@ export const AtTimeList = () => {
 };
 
 const AtTimeBlock = () => {
+    const dispatch = useDispatch();
+    const scheduleType = useSelector((state) => state.scheduleType.value);
+    const mode = "at-time";
+    let isActive = scheduleType.mode === mode;
+
     return (
-        <div className="at-time">
-            <h1 className="title">At time by number</h1>
-            <AtTimeList />
+        <div className={mode + (isActive ? "" : " is-disabled")}>
+            <h1 className="title">
+                <div
+                    className={isActive ? "radio active" : "radio"}
+                    onClick={() => dispatch(setScheduleMode({ mode }))}
+                />
+                At time by number
+            </h1>
+            <AtTimeList isActive={isActive} />
         </div>
     );
 };

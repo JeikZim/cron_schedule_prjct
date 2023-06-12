@@ -9,19 +9,23 @@ const ScheduleRouter = () => {
     const scheduleType =  useSelector((state) => state.scheduleType.value);
 
     return (
-        <div className="content">
-            {scheduleType === "Daily" ? (
-                <Daily />
-            ) : scheduleType === "Weekly" ? (
-                <Weekly />
-            ) : scheduleType === "Monthly" ? (
-                <Monthly />
-            ) : scheduleType === "Custom" ? (
-                <Custom />
-            ) : (
-                "Error"
-            )}
-        </div>
+        // <Provider store={store}>
+            <div className="content">
+                {
+                    scheduleType.type === "Daily" ? (
+                        <Daily />
+                    ) : scheduleType.type === "Weekly" ? (
+                        <Weekly />
+                    ) : scheduleType.type === "Monthly" ? (
+                        <Monthly />
+                    ) : scheduleType.type === "Custom" ? (
+                        <Custom />
+                    ) : (
+                        "Error"
+                    )
+                }
+            </div>
+        // </Provider>
     );
 };
 

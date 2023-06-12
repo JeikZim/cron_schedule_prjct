@@ -8,10 +8,10 @@ export const ScheduleTypeItem = (props) => {
     const scheduleType = useSelector((state) => state.scheduleType.value);
     const dispatch = useDispatch();
     const value = props.value;
-    let isActive = scheduleType === value;
+    let isActive = scheduleType.type === value;
 
     return (
-        <div className="item" onClick={() => dispatch(setScheduleType(value))}>
+        <div className="item" onClick={() => dispatch(setScheduleType({...scheduleType, type: value}))}>
             <div className={isActive ? "radio active" : "radio"}></div>
             <input
                 className="is-hidden"
@@ -35,7 +35,7 @@ const Schedule = () => {
             <div className="sidebar">
                 <div className="types">
                     {scheduleTypes.map((item, index) => {
-                        return <ScheduleTypeItem key={index} value={item} />;
+                        return <ScheduleTypeItem key={index} value={item.type} />;
                     })}
                 </div>
             </div>

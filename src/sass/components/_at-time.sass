@@ -1,7 +1,9 @@
 .at-time
     $at-time-item-padding: 12px
+    $at-time-height: calc( $schedule-height - $schedule-header - 3*$block-ver-padding - math.div($schedule-header, 1.5))
+    
+    height: $at-time-height
     font-weight: 500
-    height: calc( $schedule-height - 3*$block-ver-padding - math.div($schedule-header, 1.5) - $schedule-header)
     overflow-y: scroll
 
     &::-webkit-scrollbar
@@ -14,6 +16,9 @@
         width: 8px
 
     & > .title
+        display: flex
+        align-items: center
+
         position: sticky
         top: 0
 
@@ -24,16 +29,18 @@
 
         border-bottom: 1px solid $radio-color
         background-color: $schedule-bg
+
+        .radio
+            margin-left: 2px
+            margin-right: $at-time-item-padding
     
     &-list
-
+        $at-time-item-heigth: 48px
         position: relative
-        padding-bottom: $schedule-header
+        padding-bottom: $at-time-item-heigth + $at-time-item-padding
         font-size: 18px
 
         & .item
-            $at-time-item-heigth: 48px
-
             display: flex
             justify-content: space-between
             align-content: center
@@ -51,7 +58,6 @@
                 justify-content: center
                 align-items: center
                 width: 48px
-
 
             & label
                 display: flex
@@ -80,11 +86,22 @@
                     height: 75%
                     width: 75%
 
-                
+                & svg path
+                    fill: $trash-bg
 
+                & svg:hover path
+                    fill: $trash-hover-bg
+
+                & svg:active path
+                    fill: $trash-active-bg
+
+                & svg.is-disabled path
+                    fill: $trash-disabled-bg
+                    
         & .add
             position: absolute
             bottom: 0
 
             & .btn-div
-
+                height: $at-time-item-heigth
+                width: 148px

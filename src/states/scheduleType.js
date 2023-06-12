@@ -4,17 +4,22 @@ import { scheduleTypes } from "../values";
 export const scheduleTypeSlice = createSlice({
     name: "scheduleType",
     initialState: {
-        value: "Daily",
+        value: scheduleTypes[0],
     },
     reducers: {
         setScheduleType: (state, action) => {
-            if (scheduleTypes.filter(el => el === action.payload )) {
-                state.value = action.payload;
+            const arr = scheduleTypes.filter(el => el.type === action.payload.type)
+
+            if (arr && arr.length === 1) {
+                state.value = arr[0];
             }
+        },
+        setScheduleMode: (state, action) => {
+            state.value.mode = action.payload.mode
         },
     },
 });
 
-export const { setScheduleType } = scheduleTypeSlice.actions;
+export const { setScheduleType, setScheduleMode } = scheduleTypeSlice.actions;
 
 export default scheduleTypeSlice.reducer;
