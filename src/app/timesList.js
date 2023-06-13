@@ -16,18 +16,6 @@ export const timesListSlice = createSlice({
                     return { ...el, id: 1 + index };
                 });
         },
-        // setMinutes: (state, action) => {
-        //     const id = action.payload.id
-        //     const minutes = action.payload.minutes
-
-        //     state.value[id - 1].minutes = minutes
-        // },
-        // setHours: (state, action) => {
-        //     const id = action.payload.id
-        //     const hours = action.payload.hours
-
-        //     state.value[id - 1].hours = hours
-        // },
         setTime: (state, action) => {
             const id = action.payload.id
             const hours = action.payload.hours

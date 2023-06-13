@@ -1,4 +1,4 @@
-span, p, h1, h2, h3, label, input, select, option, button
+span, p, h1, h2, h3, label, input, textarea, select, option, button
     font-family: $main-font
     
 body 
@@ -7,14 +7,18 @@ body
 
 label 
     user-select: none
-
+    
 button 
     color: $main-color
 
-input
+input, textarea
     color: $main-color
     background-color: $input-bg
 
-input:focus
+input:focus, textarea:focus
     background-color: $input-focus-bg
     
+.title 
+    display: flex
+    align-items: center
+    font-size: 24px

@@ -3,7 +3,7 @@ import React from "react";
 const Custom = () => {
 
     return (
-        <div className="custom">
+        <div className="custom-block content-block">
 
         </div>
     )

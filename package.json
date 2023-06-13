@@ -12,7 +12,8 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-redux": "^8.0.7",
-        "react-scripts": "5.0.1"
+        "react-scripts": "5.0.1",
+        "redux-devtools-extension": "^2.13.9"
     },
     "scripts": {
         "start": "cross-env NODE_ENV=production concurrently \"npm run build\" \"node app.js\"",

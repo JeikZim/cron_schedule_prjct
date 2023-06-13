@@ -4,9 +4,9 @@ import AtTime from "./ScheduleModules/AtTime";
 
 const Daily = () => {
     return (
-        <div className="daily-block">
-            <EachMinutes />
-            <AtTime />
+        <div className="daily-block content-block">
+            <EachMinutes needRadio={true} />
+            <AtTime needRadio={true} />
         </div>
     );
 };

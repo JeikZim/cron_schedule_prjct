@@ -1,46 +1,27 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setScheduleMode } from "../../../states/scheduleType";
-import { setValue } from "../../../states/eachMinutes";
+import { setScheduleMode } from "../../../app/scheduleType";
+import { setValue } from "../../../app/eachMinutes";
 
-const EachMinutes = () => {
+const EachMinutes = (props) => {
     const dispatch = useDispatch();
     const scheduleType = useSelector((state) => state.scheduleType.value);
     const eachMinutes = useSelector((state) => state.eachMinutes.value);
     const mode = "each-min";
     const eachMinInput = document.getElementById(mode + "-input");
-    let isActive = scheduleType.mode === mode;
-
-    const changeHandler = (ev) => {
-        let val = ev.target.value.replace(/[^0-9]/, "");
-
-        if (val > 60) {
-            val = "60";
-        }
-        if (val.length > 2) {
-            val = val.slice(1, 3);
-        }
-
-        dispatch(setValue(val));
-        val.length >= 2 && eachMinInput.blur();
-    };
-
-    const enterHandler = (ev) => ev.code === "Enter" && eachMinInput.blur();
-
-    const onBlurHandler = (ev) => {
-            const val = ev.target.value;
-            (val === "0" || val === "") &&
-                dispatch(setValue("1"));
-        };
+    let isActive = scheduleType.modes[0] === mode;
 
     return (
         <div className={mode + ( isActive ? "" : " is-disabled" )}>
-            <div
-                className={isActive ? "radio active" : "radio"}
-                onClick={() =>
-                    dispatch(setScheduleMode({ mode }))
-                }
-            />
+            {
+                props.needRadio && 
+                <div
+                    className={isActive ? "radio active" : "radio"}
+                    onClick={() =>
+                        dispatch(setScheduleMode({ mode }))
+                    }
+                />
+            }
             <label htmlFor={mode + "-input"}>
             {!isActive && <div className="locker" />}
                 Each{" "}
@@ -58,6 +39,24 @@ const EachMinutes = () => {
             </label>
         </div>
     );
+    
+    function changeHandler(ev) {
+        let val = ev.target.value.replace(/[^0-9]/, "");
+
+        if (val > 60)   val = "60";
+        if (val.length > 2) val = val.slice(1, 3);
+
+        dispatch(setValue(val));
+        val.length >= 2 && eachMinInput.blur();
+    };
+
+    function enterHandler(ev) { return ev.code === "Enter" && eachMinInput.blur() };
+
+    function onBlurHandler(ev) {
+            const val = ev.target.value;
+            (val === "0" || val === "") &&
+                dispatch(setValue("1"));
+    };
 };
 
 export default EachMinutes;

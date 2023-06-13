@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../Button";
-import { setScheduleMode } from "../../../states/scheduleType";
-import { addTime, removeTime, setTime } from "../../../states/timesList";
+import { setScheduleMode } from "../../../app/scheduleType";
+import { addTime, removeTime, setTime } from "../../../app/timesList";
 import { ReactComponent as TrashIcon } from "../../../assets/trash_icon.svg";
 
 export const AtTimeItem = (props) => {
     const id = props.id;
-    const minutesInputDOM = document.getElementById("at-time-minutes" + id);
     const time = useSelector((state) => state.timesList.value[id - 1]);
     const dispatch = useDispatch();
+
+    let minutesInputDOM = null;
+    useEffect(() => {
+        minutesInputDOM = document.getElementById("at-time-minutes" + id)
+    })
 
     const changeHoursHandler = (ev) => {
         const val = ev.target.value.replace(/[^0-9]/, "");
@@ -132,19 +136,21 @@ export const AtTimeList = (props) => {
     );
 };
 
-const AtTimeBlock = () => {
+const AtTimeBlock = (props) => {
     const dispatch = useDispatch();
     const scheduleType = useSelector((state) => state.scheduleType.value);
     const mode = "at-time";
-    let isActive = scheduleType.mode === mode;
+    let isActive = !props.needRadio || scheduleType.modes[0] === mode;
 
     return (
         <div className={mode + (isActive ? "" : " is-disabled")}>
             <h1 className="title">
-                <div
-                    className={isActive ? "radio active" : "radio"}
-                    onClick={() => dispatch(setScheduleMode({ mode }))}
-                />
+                {
+                    props.needRadio && <div
+                        className={isActive ? "radio active" : "radio"}
+                        onClick={() => dispatch(setScheduleMode({ mode }))}
+                    />
+                }
                 At time by number
             </h1>
             <AtTimeList isActive={isActive} />

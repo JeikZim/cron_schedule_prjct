@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { scheduleTypes } from "../values";
+import { scheduleTypes } from "./availableStates";
 
 export const scheduleTypeSlice = createSlice({
     name: "scheduleType",
@@ -15,7 +15,19 @@ export const scheduleTypeSlice = createSlice({
             }
         },
         setScheduleMode: (state, action) => {
-            state.value.mode = action.payload.mode
+            const availableModes = state.value.availableModes;
+
+            for (let i = 0; i < availableModes.length; i++) {
+                const modesPair = availableModes[i];
+
+                for (let j = 0; j < modesPair.length; j++) {
+                    const mode = modesPair[j];
+
+                    if (mode === action.payload.mode) {
+                        state.value.modes[i] = action.payload.mode;
+                    }
+                }
+            }
         },
     },
 });

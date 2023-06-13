@@ -1,21 +1,23 @@
-
 .cron
-    border-radius: 7px
+    @include scrollbar
+    
     width: $container-width
-    height: $cron-height
+    height: fit-content
+    max-height: 2 * $cron-height
 
     background-color: $cron-bg
+    border-radius: 7px
 
     & input 
-        background: none
+        font-size: $input-font-size - 4px
 
         box-sizing: border-box
         padding: 0 $std-hor-padding
 
         width: 100%
-        height: 100%
+        height: $cron-height
+        background: none
 
         &:focus 
             outline: none
             border: none
-    

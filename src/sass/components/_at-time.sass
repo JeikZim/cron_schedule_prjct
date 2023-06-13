@@ -2,30 +2,17 @@
     $at-time-item-padding: 12px
     $at-time-height: calc( $schedule-height - $schedule-header - 3*$block-ver-padding - math.div($schedule-header, 1.5))
     
-    height: $at-time-height
+    max-height: $at-time-height
     font-weight: 500
-    overflow-y: scroll
-
-    &::-webkit-scrollbar
-        background: none
-        width: 8px
-
-    &::-webkit-scrollbar-thumb
-        background-color: #ffffff3b
-        border-radius: 25px
-        width: 8px
 
     & > .title
-        display: flex
-        align-items: center
 
-        position: sticky
-        top: 0
+        // position: sticky
+        // top: 0
 
         padding-bottom: $at-time-item-padding
 
         z-index: 5
-        font-size: 24px
 
         border-bottom: 1px solid $radio-color
         background-color: $schedule-bg
@@ -79,12 +66,11 @@
                 justify-content: center
                 align-items: center
                 height: 100%
-                width: $at-time-item-heigth
-                padding-left: $at-time-item-heigth
+                // width: $at-time-item-heigth
 
                 & svg
                     height: 75%
-                    width: 75%
+                    width: fit-content
 
                 & svg path
                     fill: $trash-bg

@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setScheduleType } from "../states/scheduleType";
+import { setScheduleType } from "../app/scheduleType";
 import ScheduleRouter from "./SchedulePages/ScheduleRouter";
-import { scheduleTypes } from "../values";
+import { scheduleTypes } from "../app/availableStates";
 
 export const ScheduleTypeItem = (props) => {
     const scheduleType = useSelector((state) => state.scheduleType.value);
