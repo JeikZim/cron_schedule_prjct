@@ -10,8 +10,8 @@ const Monthly = () => {
         <div className="monthly-block content-block">
             <Months needRadio={false} />
             <DaysOfMonth needRadio={true} />
-            <AtTime needRadio={true}/>
             <EachMinutes needRadio={true} />
+            <AtTime needRadio={true}/>
         </div>
     )
 }

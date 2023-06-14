@@ -33,7 +33,7 @@ export const cronLineSlice = createSlice({
                 line[0] = lineObg.minutes || '*'    // Minutes
                 line[1] = lineObg.hours || '*'      // Hours
                 line[2] = lineObg.daysOfMonth || '*'// Day
-                line[3] = lineObg.month || '*'      // Week
+                line[3] = lineObg.months || '*'      // Week
                 line[4] = lineObg.daysOfWeek || '*' // Month
                 
                 lines.push(line.join(' '))

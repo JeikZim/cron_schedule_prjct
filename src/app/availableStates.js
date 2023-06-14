@@ -6,7 +6,7 @@ export const scheduleTypes = [
     },
     {
         type: "Weekly",
-        modes: ["days-of-week"],
+        modes: ["each-min"],
         availableModes: [["each-min", "at-time"]]
     },
     {
@@ -16,8 +16,8 @@ export const scheduleTypes = [
     },
     {
         type: "Custom",
-        modes: [""],
-        availableModes: [""]
+        modes: ["at-time", "by-days-of-months"],
+        availableModes: [["each-min", "at-time"], ["each-days-of-month", "by-days-of-months"]]
     },
 ];
 
@@ -92,7 +92,7 @@ export const monthsArr = [
         id: 8,
         name: "AUG",
         daysCount: 31
-    },,
+    },
     {
         id: 9,
         name: "SEP",
@@ -112,7 +112,7 @@ export const monthsArr = [
         id: 12,
         name: "DEC",
         daysCount: 31
-    },
+    }
 ];
 
 export const monthDaysArr = (() => {

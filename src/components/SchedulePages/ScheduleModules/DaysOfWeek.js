@@ -32,7 +32,7 @@ export const DaysOfWeekList = (props) => {
 
 const DaysOfWeekBlock = () => {
     return (
-        <div className="days-of-week">
+        <div className="days-of-week schedule-type">
             <h1 className="title">Days of the week</h1>
             <DaysOfWeekList />
         </div>

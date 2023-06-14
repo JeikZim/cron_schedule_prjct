@@ -12,8 +12,8 @@ export const AtTimeItem = (props) => {
 
     let minutesInputDOM = null;
     useEffect(() => {
-        minutesInputDOM = document.getElementById("at-time-minutes" + id)
-    })
+        minutesInputDOM = document.getElementById("at-time-minutes" + id);
+    });
 
     const changeHoursHandler = (ev) => {
         const val = ev.target.value.replace(/[^0-9]/, "");
@@ -71,32 +71,40 @@ export const AtTimeItem = (props) => {
     };
 
     return (
-        <div key={id} className="item at-time__item">
+        <div key={id} className="item">
             <h2 className="title">№{id}</h2>
             <label htmlFor="AtTimeHours">
                 At
                 <input
                     id={"at-time-hours" + id}
-                    className={props.isActive ? "" : "is-disabled"} 
+                    className={props.isActive ? "" : "is-disabled"}
                     type="text"
                     value={time.hours}
                     onChange={changeHoursHandler}
                     onKeyDown={changeFocusByEnter("focus")}
                     onBlur={makeBlurHandler("hours")}
+                    disabled={!props.isActive}
                 />
                 :
                 <input
                     id={"at-time-minutes" + id}
-                    className={props.isActive ? "" : "is-disabled"} 
+                    className={props.isActive ? "" : "is-disabled"}
                     type="text"
                     value={time.minutes}
                     onChange={changeMinutesHandler}
                     onKeyDown={changeFocusByEnter("blur")}
                     onBlur={makeBlurHandler("minutes")}
+                    disabled={!props.isActive}
                 />
             </label>
-            <div className="btn-div" onClick={removeHandler}>
-                <TrashIcon className={props.isActive ? "" : "is-disabled"} alt="Trash icon" />
+            <div
+                className="btn-div"
+                onClick={props.isActive ? removeHandler : () => {}}
+            >
+                <TrashIcon
+                    className={props.isActive ? "" : "is-disabled"}
+                    alt="Trash icon"
+                />
             </div>
         </div>
     );
@@ -120,7 +128,7 @@ export const AtTimeList = (props) => {
                 <Button
                     isActive={props.isActive}
                     name="Add"
-                    onClick={addHandler}
+                    onClick={props.isActive ? addHandler : () => {}}
                 />
             </div>
             {timesList.map((item) => (
@@ -143,14 +151,24 @@ const AtTimeBlock = (props) => {
     let isActive = !props.needRadio || scheduleType.modes[0] === mode;
 
     return (
-        <div className={mode + (isActive ? "" : " is-disabled")}>
-            <h1 className="title">
-                {
-                    props.needRadio && <div
-                        className={isActive ? "radio active" : "radio"}
-                        onClick={() => dispatch(setScheduleMode({ mode }))}
-                    />
+        <div
+            className={
+                mode + " schedule-type" + (isActive ? "" : " is-disabled")
+            }
+        >
+            <h1
+                className="title"
+                onClick={
+                    props.needRadio
+                        ? () => dispatch(setScheduleMode({ mode }))
+                        : () => {}
                 }
+            >
+                {props.needRadio && (
+                    <div
+                        className={isActive ? "radio active" : "radio"}
+                    />
+                )}
                 At time by number
             </h1>
             <AtTimeList isActive={isActive} />

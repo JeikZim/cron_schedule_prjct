@@ -5,14 +5,13 @@ export const daysOfMonthSlice = createSlice({
     initialState: {
         value: {
             mode: "by-days-of-months",
-            eachDays: null,
+            eachDays: 1,
             days: []
         },
     },
     reducers: {
         addDayOfMonth: (state, action) => {
-            const arr = state.value.days;
-            state.value.days = arr.push(action.payload);
+            state.value.days.push(action.payload);
         },
         removeDayOfMonth: (state, action) => {
             if (state.value.days.includes(action.payload)) {

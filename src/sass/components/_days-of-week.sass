@@ -1,8 +1,3 @@
-.days-of-week
-    padding: $block-ver-padding 0
-
-    .title
-
 .days-of-week-list
     display: flex
     justify-content: center
@@ -12,8 +7,8 @@
     margin: math.div($block-ver-padding, 2) 0
     // padding: 0 math.div($days-of-week-item-size, 6)
 
-    border-top: 1px solid black
-    border-bottom: 1px solid black
+    border-top: $list-border
+    border-bottom: $list-border
     // background: lighten($btn-input-bg, 7.5%)
     // border-radius: math.div($days-of-week-item-size, 12)
 
@@ -22,25 +17,13 @@
     width: $days-of-week-item-size
 
     background: lighten($btn-input-bg, 7.5%)
-
     box-sizing: content-box
-
-    // &:not(:last-child)
-    //     border-right: $days-of-week-item-border
 
     -moz-background-clip: content  
     -webkit-background-clip: content
     background-clip: content-box
+
     border-right: $days-of-week-item-border
     border-left: $days-of-week-item-border
 
 
-    & span
-        user-select: none
-        display: flex
-        justify-content: center
-        align-items: center
-        width: 100%
-        height: 100%
-        font-size: 18px
-        font-weight: 600
