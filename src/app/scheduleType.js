@@ -17,14 +17,16 @@ export const scheduleTypeSlice = createSlice({
         setScheduleMode: (state, action) => {
             const availableModes = state.value.availableModes;
 
-            for (let i = 0; i < availableModes.length; i++) {
-                const modesPair = availableModes[i];
+            for (const key in availableModes) {
+                if (Object.hasOwnProperty.call(availableModes, key)) {
+                    const modes = availableModes[key];
+                    
+                    for (let j = 0; j < modes.length; j++) {
+                        const mode = modes[j];
 
-                for (let j = 0; j < modesPair.length; j++) {
-                    const mode = modesPair[j];
-
-                    if (mode === action.payload.mode) {
-                        state.value.modes[i] = action.payload.mode;
+                        if (mode === action.payload.mode) {
+                            state.value.modes[key] = action.payload.mode;
+                        }
                     }
                 }
             }

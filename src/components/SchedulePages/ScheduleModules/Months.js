@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { monthsArr } from "../../../app/availableStates";
 import { setMonths } from "../../../app/months";
 
-export const MonthsItem = (props) => {
-    const name = props.name;
+export const MonthsItem = ({ name }) => {
     const months = useSelector((state) => state.months.value);
     const isChosen = useSelector((state) => state.months.value[name]);
     const dispatch = useDispatch();
@@ -15,8 +14,6 @@ export const MonthsItem = (props) => {
 
     return (
         <div
-            // onMouseDown={() => onMouseDown = true}
-            // onMouseUp={() => onMouseDown = false}
             onClick={toggleChose}
             className={"months-item" + (isChosen ? " is-chosen" : "")}
         >

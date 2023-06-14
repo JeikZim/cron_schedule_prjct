@@ -2,6 +2,7 @@ import { configureStore, applyMiddleware } from '@reduxjs/toolkit';
 import { composeWithDevTools } from "redux-devtools-extension";
 import scheduleTypeReducer from './scheduleType'
 import cronLineReducer from "./cronLine";
+import cronLocalLinesReducer from './cronLocalLines'
 import eachMinutesReducer from './eachMinutes'
 import timesListReducer from './timesList'
 import daysOfWeekReducer from "./daysOfWeek";
@@ -11,9 +12,10 @@ import daysOfMonthReducer from "./daysOfMonth";
 export default configureStore({
     reducer: {
         scheduleType: scheduleTypeReducer,
-        timesList: timesListReducer,
-        eachMinutes: eachMinutesReducer,
         cronLine: cronLineReducer,
+        cronLocalLines: cronLocalLinesReducer,
+        eachMinutes: eachMinutesReducer,
+        timesList: timesListReducer,
         daysOfWeek: daysOfWeekReducer,
         months: monthsReducer,
         daysOfMonth: daysOfMonthReducer

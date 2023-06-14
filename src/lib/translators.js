@@ -24,33 +24,6 @@ export const atTimeTranslator = (lines, times) => {
     return lines;
 }
 
-export const daysOfWeekTranslator = (lines, daysOfWeek) => {
-    let activeDaysOfWeek = [];
-    
-    for (const dayName in daysOfWeek) {
-        if (Object.hasOwnProperty.call(daysOfWeek, dayName)) {
-            const dayValue = daysOfWeek[dayName];
-
-            if (dayValue) {
-                activeDaysOfWeek.push(dayName);
-            }
-        }
-    }
-
-    if (activeDaysOfWeek.length === 7 || activeDaysOfWeek.length === 0) {
-        activeDaysOfWeek = "*";
-    } 
-    else {
-        activeDaysOfWeek = activeDaysOfWeek.join(',')
-    }
-
-    for (let i = 0; i < lines.length; i++) {
-        lines[i] = { ...lines[i], daysOfWeek: activeDaysOfWeek };
-    }
-
-    return lines;
-}
-
 export const eachDaysTranslator = (lines, eachDays) => {
     const daysOfMonth = `*/${eachDays}`;
 
@@ -73,6 +46,34 @@ export const byDaysOfMonthTranslator = (lines, daysOfMonthArr) => {
     return lines;
 }
 
+export const daysOfWeekTranslator = (lines, daysOfWeek) => {
+    let activeDaysOfWeek = [];
+    
+    for (const dayName in daysOfWeek) {
+        if (Object.hasOwnProperty.call(daysOfWeek, dayName)) {
+            const dayValue = daysOfWeek[dayName];
+
+            if (dayValue) {
+                activeDaysOfWeek.push(dayName);
+            }
+        }
+    }
+
+    if (activeDaysOfWeek.length === 7 || activeDaysOfWeek.length === 0) {
+        activeDaysOfWeek = "*";
+    } 
+    else {
+        activeDaysOfWeek = activeDaysOfWeek.join(',')
+    }
+
+    let i = 0
+    do {
+        lines[i] = { ...lines[i], daysOfWeek: activeDaysOfWeek };
+        i++
+    } while (i < lines.length);
+
+    return lines;
+}
 export const monthsTranslator = (lines, months) => {
     let activeMonths = [];
     
@@ -89,9 +90,11 @@ export const monthsTranslator = (lines, months) => {
         activeMonths = activeMonths.join(',')
     }
 
-    for (let i = 0; i < lines.length; i++) {
+    let i = 0
+    do {
         lines[i] = { ...lines[i], months: activeMonths };
-    }
+        i++
+    } while (i < lines.length);
 
     return lines;
 }

@@ -4,10 +4,9 @@ import { setScheduleType } from "../app/scheduleType";
 import ScheduleRouter from "./SchedulePages/ScheduleRouter";
 import { scheduleTypes } from "../app/availableStates";
 
-export const ScheduleTypeItem = (props) => {
+export const ScheduleTypeItem = ({ value }) => {
     const scheduleType = useSelector((state) => state.scheduleType.value);
     const dispatch = useDispatch();
-    const value = props.value;
     let isActive = scheduleType.type === value;
 
     return (

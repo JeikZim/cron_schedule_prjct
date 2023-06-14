@@ -1,13 +1,13 @@
 import React from "react";
 
-const Button = (props) => {
+const Button = ({ name, isActive, onClick }) => {
     return (
         <div className="btn-div">
             <button
-                onClick={props.onClick}
-                className={"btn" + (props.isActive ? "" : " is-disabled")}
+                onClick={onClick}
+                className={"btn" + (isActive ? "" : " is-disabled")}
             >
-                {props.name}
+                {name}
             </button>
         </div>
     );

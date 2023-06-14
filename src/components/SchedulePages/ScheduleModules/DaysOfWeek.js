@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { daysOfWeekArr } from '../../../app/availableStates'
 import { setDaysOfWeek } from "../../../app/daysOfWeek";
 
-export const DaysOfWeekItem = (props) => {
-    const name = props.name;
+export const DaysOfWeekItem = ({ name }) => {
     const daysOfWeek = useSelector((state) => state.daysOfWeek.value);
     const isChosen = useSelector((state) => state.daysOfWeek.value[name]);
     const dispatch = useDispatch();
 
-    const toggleChose = (ev) => {
+    const toggleChose = () => {
         dispatch(setDaysOfWeek({ ...daysOfWeek, [name]: !isChosen }))
     }
 
@@ -20,7 +19,7 @@ export const DaysOfWeekItem = (props) => {
     );
 };
 
-export const DaysOfWeekList = (props) => {
+export const DaysOfWeekList = () => {
     return (
         <div className="days-of-week-list">
             {daysOfWeekArr.map(day => {

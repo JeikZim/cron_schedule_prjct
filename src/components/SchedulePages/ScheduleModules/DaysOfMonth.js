@@ -9,14 +9,14 @@ import {
     setDaysOfMonthMode,
 } from "../../../app/daysOfMonth";
 
-export const EachDays = (props) => {
+export const EachDays = ({ needRadio }) => {
     const dispatch = useDispatch();
     const scheduleType = useSelector((state) => state.scheduleType.value);
     const daysOfMonth = useSelector((state) => state.daysOfMonth.value);
     const eachDays = daysOfMonth.eachDays;
     const mode = "each-days-of-month";
     const eachDaysInput = document.getElementById(mode + "-input");
-    let isActive = scheduleType.modes[1] === mode;
+    let isActive = scheduleType.modes.day === mode;
 
     return (
         <div
@@ -26,7 +26,7 @@ export const EachDays = (props) => {
                 (isActive ? "" : " is-disabled")
             }
         >
-            {props.needRadio && (
+            {needRadio && (
                 <div
                     className={isActive ? "radio active" : "radio"}
                     onClick={() => {
@@ -38,7 +38,7 @@ export const EachDays = (props) => {
             <label
                 htmlFor={mode + "-input"}
                 onClick={
-                    props.needRadio
+                    needRadio
                         ? () => {
                               dispatch(setScheduleMode({ mode }));
                               dispatch(setDaysOfMonthMode({ mode }));
@@ -57,6 +57,7 @@ export const EachDays = (props) => {
                     onChange={changeHandler}
                     onBlur={onBlurHandler}
                     disabled={!isActive}
+                    autoComplete="off"
                 />{" "}
                 days of the month
             </label>
@@ -84,11 +85,9 @@ export const EachDays = (props) => {
     }
 };
 
-export const DaysOfMonthItem = (props) => {
-    const id = props.id;
+export const DaysOfMonthItem = ({ id, isActive }) => {
     const daysOfMonth = useSelector((state) => state.daysOfMonth.value);
     let isChosen = daysOfMonth.days.includes(id);
-    const isActive = props.isActive;
     const dispatch = useDispatch();
 
     const toggleChose = () => {
@@ -105,16 +104,16 @@ export const DaysOfMonthItem = (props) => {
     );
 };
 
-export const DaysOfMonthList = (props) => {
+export const DaysOfMonthList = ({ isActive }) => {
     return (
         <div className="days-of-month-list">
-            {props.isActive ? true : <div className="locker" />}
+            {isActive ? true : <div className="locker" />}
             {monthDaysArr.map((num) => {
                 return (
                     <DaysOfMonthItem
                         key={num}
                         id={num}
-                        isActive={props.isActive}
+                        isActive={isActive}
                     />
                 );
             })}
@@ -122,11 +121,11 @@ export const DaysOfMonthList = (props) => {
     );
 };
 
-export const ByDaysOfMonth = (props) => {
+export const ByDaysOfMonth = ({ needRadio }) => {
     const dispatch = useDispatch();
     const scheduleType = useSelector((state) => state.scheduleType.value);
     const mode = "by-days-of-months";
-    const isActive = !props.needRadio || scheduleType.modes[1] === mode;
+    const isActive = !needRadio || scheduleType.modes.day === mode;
 
     return (
         <div
@@ -140,7 +139,7 @@ export const ByDaysOfMonth = (props) => {
                     dispatch(setScheduleMode({ mode }));
                 }}
             >
-                {props.needRadio && (
+                {needRadio && (
                     <div className={isActive ? "radio active" : "radio"} />
                 )}
                 By days of the month

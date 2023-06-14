@@ -1,0 +1,27 @@
+.scroll-button
+    user-select: none
+
+    position: absolute
+    top: calc(100% / 2 - math.div($scroll-btn-size, 2))
+
+    display: flex
+    justify-content: center
+    align-items: center
+
+    font-size: 18px
+    font-weight: 700
+    line-height: $scroll-btn-size
+
+    height: $scroll-btn-size
+    width: $scroll-btn-size
+
+    background: $scroll-btn-bg-color
+    border-radius: 50%
+
+    &-right
+        right: $scrollbar-position
+
+    &-left
+        left: $scrollbar-position
+
+    

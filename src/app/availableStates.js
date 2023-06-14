@@ -1,23 +1,43 @@
 export const scheduleTypes = [
     {
         type: "Daily",
-        modes: ["each-min"],
-        availableModes: [["each-min", "at-time"]]
+        modes: { 
+            time: "each-min" 
+        },
+        availableModes: { 
+            time: ["each-min", "at-time"] 
+        }
     },
     {
         type: "Weekly",
-        modes: ["each-min"],
-        availableModes: [["each-min", "at-time"]]
+        modes: { 
+            time: "each-min" 
+        },
+        availableModes: { 
+            time: ["each-min", "at-time"] 
+        }
     },
     {
         type: "Monthly",
-        modes: ["at-time", "by-days-of-months"],
-        availableModes: [["each-min", "at-time"], ["each-days-of-month", "by-days-of-months"]]
+        modes: { 
+            time: "each-min", 
+            day:  "by-days-of-months" 
+        },
+        availableModes: { 
+            time: ["each-min", "at-time"], 
+            day:  ["each-days-of-month", "by-days-of-months"] 
+        },
     },
     {
         type: "Custom",
-        modes: ["at-time", "by-days-of-months"],
-        availableModes: [["each-min", "at-time"], ["each-days-of-month", "by-days-of-months"]]
+        modes: { 
+            time: "each-min", 
+            day:  "by-days-of-months" 
+        },
+        availableModes: { 
+            time: ["each-min", "at-time"], 
+            day:  ["each-days-of-month", "by-days-of-months"] 
+        },
     },
 ];
 

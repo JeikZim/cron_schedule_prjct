@@ -5,8 +5,7 @@ import { setScheduleMode } from "../../../app/scheduleType";
 import { addTime, removeTime, setTime } from "../../../app/timesList";
 import { ReactComponent as TrashIcon } from "../../../assets/trash_icon.svg";
 
-export const AtTimeItem = (props) => {
-    const id = props.id;
+export const AtTimeItem = ({ id, isActive }) => {
     const time = useSelector((state) => state.timesList.value[id - 1]);
     const dispatch = useDispatch();
 
@@ -77,32 +76,34 @@ export const AtTimeItem = (props) => {
                 At
                 <input
                     id={"at-time-hours" + id}
-                    className={props.isActive ? "" : "is-disabled"}
+                    className={isActive ? "" : "is-disabled"}
                     type="text"
                     value={time.hours}
                     onChange={changeHoursHandler}
                     onKeyDown={changeFocusByEnter("focus")}
                     onBlur={makeBlurHandler("hours")}
-                    disabled={!props.isActive}
+                    disabled={!isActive}
+                    autoComplete="off"
                 />
                 :
                 <input
                     id={"at-time-minutes" + id}
-                    className={props.isActive ? "" : "is-disabled"}
+                    className={isActive ? "" : "is-disabled"}
                     type="text"
                     value={time.minutes}
                     onChange={changeMinutesHandler}
                     onKeyDown={changeFocusByEnter("blur")}
                     onBlur={makeBlurHandler("minutes")}
-                    disabled={!props.isActive}
+                    disabled={!isActive}
+                    autoComplete="off"
                 />
             </label>
             <div
                 className="btn-div"
-                onClick={props.isActive ? removeHandler : () => {}}
+                onClick={isActive ? removeHandler : () => {}}
             >
                 <TrashIcon
-                    className={props.isActive ? "" : "is-disabled"}
+                    className={isActive ? "" : "is-disabled"}
                     alt="Trash icon"
                 />
             </div>
@@ -110,7 +111,7 @@ export const AtTimeItem = (props) => {
     );
 };
 
-export const AtTimeList = (props) => {
+export const AtTimeList = ({ isActive }) => {
     const timesList = useSelector((state) => state.timesList.value);
     const dispatch = useDispatch();
 
@@ -123,17 +124,17 @@ export const AtTimeList = (props) => {
 
     return (
         <div className="at-time-list">
-            {props.isActive ? true : <div className="locker" />}
+            {isActive ? true : <div className="locker" />}
             <div className="add">
                 <Button
-                    isActive={props.isActive}
+                    isActive={isActive}
                     name="Add"
-                    onClick={props.isActive ? addHandler : () => {}}
+                    onClick={isActive ? addHandler : () => {}}
                 />
             </div>
             {timesList.map((item) => (
                 <AtTimeItem
-                    isActive={props.isActive}
+                    isActive={isActive}
                     key={item.id}
                     id={item.id}
                     hours={item.hours}
@@ -144,11 +145,11 @@ export const AtTimeList = (props) => {
     );
 };
 
-const AtTimeBlock = (props) => {
+const AtTimeBlock = ({ needRadio }) => {
     const dispatch = useDispatch();
     const scheduleType = useSelector((state) => state.scheduleType.value);
     const mode = "at-time";
-    let isActive = !props.needRadio || scheduleType.modes[0] === mode;
+    let isActive = !needRadio || scheduleType.modes.time === mode;
 
     return (
         <div
@@ -159,12 +160,12 @@ const AtTimeBlock = (props) => {
             <h1
                 className="title"
                 onClick={
-                    props.needRadio
+                    needRadio
                         ? () => dispatch(setScheduleMode({ mode }))
                         : () => {}
                 }
             >
-                {props.needRadio && (
+                {needRadio && (
                     <div
                         className={isActive ? "radio active" : "radio"}
                     />

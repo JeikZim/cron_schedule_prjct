@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setScheduleMode } from "../../../app/scheduleType";
 import { setValue } from "../../../app/eachMinutes";
 
-const EachMinutes = (props) => {
+const EachMinutes = ({ needRadio }) => {
     const dispatch = useDispatch();
     const scheduleType = useSelector((state) => state.scheduleType.value);
     const eachMinutes = useSelector((state) => state.eachMinutes.value);
     const mode = "each-min";
     const eachMinInput = document.getElementById(mode + "-input");
-    let isActive = scheduleType.modes[0] === mode;
+    let isActive = scheduleType.modes.time === mode;
 
     return (
         <div
@@ -19,7 +19,7 @@ const EachMinutes = (props) => {
                 (isActive ? "" : " is-disabled")
             }
         >
-            {props.needRadio && (
+            {needRadio && (
                 <div
                     className={isActive ? "radio active" : "radio"}
                     onClick={() => dispatch(setScheduleMode({ mode }))}
@@ -27,7 +27,7 @@ const EachMinutes = (props) => {
             )}
             <label
                 onClick={
-                    props.needRadio
+                    needRadio
                         ? () => dispatch(setScheduleMode({ mode }))
                         : () => {}
                 }
@@ -44,6 +44,7 @@ const EachMinutes = (props) => {
                     onChange={changeHandler}
                     onBlur={onBlurHandler}
                     disabled={!isActive}
+                    autoComplete="off"
                 />{" "}
                 minutes
             </label>

@@ -33,16 +33,17 @@ const SaveLoadButtons = () => {
 
     function saveSchedule() {
         let lines = [];
+        const curModes = scheduleType.modes;
+        const dailyAvailableModes = scheduleTypes[0].availableModes;
+        const weeklyAvailableModes = scheduleTypes[1].availableModes;
+        const monthlyAvailableModes = scheduleTypes[2].availableModes;
+        
         switch (scheduleType.type) {
             // Daily
             case scheduleTypes[0].type:
-                const mode = scheduleType.modes[0];
-                const modeOne = scheduleTypes[0].availableModes[0][0];
-                const modeTwo = scheduleTypes[0].availableModes[0][1];
-
-                if (mode === modeOne) {
+                if (curModes.time === dailyAvailableModes.time[0]) {
                     lines = eachMinutesTranslator([], eachMinutes);
-                } else if (mode === modeTwo) {
+                } else if (curModes.time === dailyAvailableModes.time[1]) {
                     lines = atTimeTranslator([], times);
                 }
 
@@ -51,7 +52,13 @@ const SaveLoadButtons = () => {
 
             // Weekly
             case scheduleTypes[1].type:
-                lines = atTimeTranslator(lines, times);
+
+                if (curModes.time === weeklyAvailableModes.time[0]) {
+                    lines = eachMinutesTranslator([], eachMinutes);
+                } else if (curModes.time === weeklyAvailableModes.time[1]) {
+                    lines = atTimeTranslator([], times);
+                }
+
                 lines = daysOfWeekTranslator(lines, daysOfWeek);
 
                 dispatch(setLine({ lines }));
@@ -59,21 +66,17 @@ const SaveLoadButtons = () => {
 
             // Monthly
             case scheduleTypes[2].type:
-                const timesMode = scheduleType.modes[0];
-                const daysMode = scheduleType.modes[1];
-                const availableTimesModes = scheduleTypes[2].availableModes[0];
-                const availableDaysModes = scheduleTypes[2].availableModes[1];
 
-                if (timesMode === availableTimesModes[0]) {
+                if (curModes.time === monthlyAvailableModes.time[0]) {
                     lines = eachMinutesTranslator(lines, eachMinutes);
                 }
-                else if (timesMode === availableTimesModes[1]) {
+                else if (curModes.time === monthlyAvailableModes.time[1]) {
                     lines = atTimeTranslator(lines, times);
                 }
-                if (daysMode === availableDaysModes[0]) {
+                if (curModes.day === monthlyAvailableModes.day[0]) {
                     lines = eachDaysTranslator(lines, eachDays);
                 }
-                else if (daysMode === availableDaysModes[1]) {
+                else if (curModes.day === monthlyAvailableModes.day[1]) {
                     lines = byDaysOfMonthTranslator(lines, daysOfMonth);
                 }
 
@@ -84,7 +87,24 @@ const SaveLoadButtons = () => {
                 
             // Custom
             case scheduleTypes[3].type:
-                //
+
+                if (curModes.time === monthlyAvailableModes.time[0]) {
+                    lines = eachMinutesTranslator(lines, eachMinutes);
+                }
+                else if (curModes.time === monthlyAvailableModes.time[1]) {
+                    lines = atTimeTranslator(lines, times);
+                }
+                if (curModes.day === monthlyAvailableModes.day[0]) {
+                    lines = eachDaysTranslator(lines, eachDays);
+                }
+                else if (curModes.day === monthlyAvailableModes.day[1]) {
+                    lines = byDaysOfMonthTranslator(lines, daysOfMonth);
+                }
+
+                lines = daysOfWeekTranslator(lines, daysOfWeek);
+                lines = monthsTranslator(lines, months);
+
+                dispatch(setLine({ lines }));
 
                 break;
 
