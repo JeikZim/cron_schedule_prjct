@@ -25,9 +25,9 @@ const SaveLoadButtons = () => {
     const isValidGlobal = useSelector((state) => state.cronLocalLines.isValid);
     const [loadActive, setLoadActive] = useState(true)
 
-    // useEffect(() => {
-    //     setLoadActive(isValidGlobal);
-    // })
+    useEffect(() => {
+        setLoadActive(isValidGlobal);
+    }, [isValidGlobal])
 
     return (
         <div className="btn-group">

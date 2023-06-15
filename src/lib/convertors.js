@@ -46,6 +46,8 @@ export const eachMinutesConvertor = (lines, eachMinutes) => {
 };
 
 export const atTimeConvertor = (lines, times) => {
+    lines[0] = { ...lines[0], minutes: '*', hours: '*' };
+
     for (let i = 0; i < times.length; i++) {
         const time = times[i];
         const hours = time.hours;
