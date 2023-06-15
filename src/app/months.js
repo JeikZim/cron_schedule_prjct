@@ -15,7 +15,7 @@ export const monthsSlice = createSlice({
             SEP: false,
             OCT: false,
             NOV: false,
-            DEC: false
+            DEC: false,
         },
     },
     reducers: {
@@ -23,7 +23,6 @@ export const monthsSlice = createSlice({
             for (const month in action.payload) {
                 if (Object.hasOwnProperty.call(action.payload, month)) {
                     state.value[month] = action.payload[month];
-                    
                 }
             }
         },

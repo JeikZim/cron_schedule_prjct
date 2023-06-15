@@ -1,6 +1,17 @@
 
 import { daysOfWeekArr, monthsArr } from '../app/availableStates'
 
+export const checkEmptyChars = (arr) => {
+    for (let i = 0; i < arr.length; i++) {
+        const el = arr[i];
+        
+        if (el === '') {
+            return false
+        }
+    }
+    return true
+}
+
 export const checkStarInChars = (arr) => {
     for (let i = 0; i < arr.length; i++) {
         const el = arr[i];
@@ -35,7 +46,7 @@ export const checkDefisInChars = (arr) => {
 
 const checkDefises = (el, minVal, maxVal, compareRules=null) => { 
         if (el.includes("-")) {
-            if (el.length > 7) {
+            if (el.length > 7 || el.length < 3) {
                 return false;
             } else {
                 let tmp = el.split('-');
@@ -119,6 +130,10 @@ const checkComma = (el, minVal, maxVal, compareRules=null) => {
     if (el.includes(",")) {
         let tmp = el.split(',');
 
+        if (tmp.filter((el) => el === "").length !== 0) {
+            return false;
+        }
+
         for (let i = 0; i < tmp.length; i++) {
             if (!isNaN(tmp[0])) {    
                 if (tmp[0] > maxVal || tmp[0] < minVal ) {
@@ -182,7 +197,6 @@ const checkSlashes = (el, minVal, maxVal) => {
         let tmp = el.split('/');
 
         if (tmp.length > 2 || tmp[0] === '' || tmp[1] === '') {
-            console.log('a');
             return false
         }
 
@@ -191,7 +205,6 @@ const checkSlashes = (el, minVal, maxVal) => {
 
         if (!isNaN(left) && !isNaN(right)) {
             if (left > maxVal || left < minVal || right > maxVal || right < minVal ) {
-                console.log('b');
                 return false;
             } 
             return true;
@@ -199,17 +212,14 @@ const checkSlashes = (el, minVal, maxVal) => {
         else if (typeof left === 'string' && !isNaN(right)) {
             if (left === '*') {
                 if (right > maxVal || right < minVal ) {
-                    console.log('c');
                     return false;
                 } 
                 return true;
             }
             
-            console.log('d');
             return false
         }
         else {
-            console.log('e');
             return false
         }
     }
@@ -236,11 +246,10 @@ export const checkUsuallyVals = (arr) => {
     return true
 }
 
-const checkUsually = (el, minVal, maxVal, compareRules) => { 
+const checkUsually = (el, minVal, maxVal, compareRules = []) => { 
     if (!el.includes('*') && !el.includes('/') && !el.includes(',') && !el.includes('-')) {
         if (!isNaN(el)) {
             if (el > maxVal || el < minVal) {
-                console.log('a');
                 return false;
             } 
             return true;
@@ -263,13 +272,11 @@ const checkUsually = (el, minVal, maxVal, compareRules) => {
             }
     
             if ( !isInList ) {
-                console.log('b');
                 return false;
             }
             return true
         }
         else {
-            console.log('c');
             return false
         }
     }

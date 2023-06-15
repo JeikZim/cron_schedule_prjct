@@ -8,7 +8,9 @@ export const scheduleTypeSlice = createSlice({
     },
     reducers: {
         setScheduleType: (state, action) => {
-            const arr = scheduleTypes.filter(el => el.type === action.payload.type)
+            const arr = scheduleTypes.filter(
+                (el) => el.type === action.payload.type
+            );
 
             if (arr && arr.length === 1) {
                 state.value = arr[0];
@@ -20,7 +22,7 @@ export const scheduleTypeSlice = createSlice({
             for (const key in availableModes) {
                 if (Object.hasOwnProperty.call(availableModes, key)) {
                     const modes = availableModes[key];
-                    
+
                     for (let j = 0; j < modes.length; j++) {
                         const mode = modes[j];
 

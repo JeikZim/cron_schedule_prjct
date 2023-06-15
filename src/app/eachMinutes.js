@@ -7,8 +7,8 @@ export const eachMinutesSlice = createSlice({
     },
     reducers: {
         setValue: (state, action) => {
-            state.value = action.payload
-        }
+            state.value = action.payload;
+        },
     },
 });
 

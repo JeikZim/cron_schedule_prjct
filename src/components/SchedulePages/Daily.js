@@ -1,5 +1,5 @@
 import React from "react";
-import EachMinutes from './ScheduleModules/EachMinutes'
+import EachMinutes from "./ScheduleModules/EachMinutes";
 import AtTime from "./ScheduleModules/AtTime";
 
 const Daily = () => {
@@ -11,4 +11,4 @@ const Daily = () => {
     );
 };
 
-export default Daily
+export default Daily;

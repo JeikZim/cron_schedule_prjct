@@ -2,80 +2,89 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import scrollAnimation from "../lib/makeScrollAnimation";
 import objToString from "../lib/objToString";
-import { checkStarInChars, checkCommaInChars, checkDefisInChars, checkSlashInChars, checkUsuallyVals } from '../lib/validation';
-import { setLocalLines, changeLine } from "../app/cronLocalLines";
+import {
+    checkEmptyChars,
+    checkStarInChars,
+    checkCommaInChars,
+    checkDefisInChars,
+    checkSlashInChars,
+    checkUsuallyVals,
+} from "../lib/validation";
+import { changeLine, setValidityGlobal } from "../app/cronLocalLines";
 
 const CronInput = ({ id, index, line, inputs }) => {
-    const dispatch = useDispatch();
-    const cronData = useSelector(state => state.cronLine.value);
-    const localLines = useSelector(state => state.cronLocalLines.value);
+    line = objToString(line, " ");
+
+    const [localLine, setLocalLine] = useState(line);
     const [isValid, setValidity] = useState(true);
+
+    const dispatch = useDispatch();
+    const cronData = useSelector((state) => state.cronLine.value);
 
     const showInvalidity = useCallback(() => {
         document.getElementById("cron-input-" + id).classList.add("is-invalid");
+    }, [id]);
 
-        setTimeout(() => {
-            setValidity(true);
+    useEffect(() => {
+        !isValid && showInvalidity();
+        isValid &&
             document
                 .getElementById("cron-input-" + id)
                 .classList.remove("is-invalid");
-        }, 3000);
-    }, [id, isValid]);
+    });
 
     useEffect(() => {
-        dispatch(changeLine({ line: objToString(line, " "), index }));
-    }, [cronData])
+        dispatch(setValidityGlobal(isValid));
+    }, [isValid]);
 
     useEffect(() => {
-        setValidity(checkValidity(localLines[index]))
-        !isValid && showInvalidity();
-    }, [isValid])
+        setLocalLine(line);
+        dispatch(changeLine({ line, index }));
+    }, [cronData]);
 
     const checkValidity = (line) => {
-        const lineArr = line.split(" ");
+        const lineArr = line.replace(/ +/g, " ").trim().split(" ");
 
-        if (lineArr.length !== 5) {
-            console.log(1);
+        if (lineArr.length !== 5 || !checkEmptyChars(lineArr)) {
+            // console.log(1);
             return false;
-        }
-        else if (!checkStarInChars(lineArr)) {
-            console.log(2);
+        } else if (!checkStarInChars(lineArr)) {
+            // console.log(2);
             return false;
-        }
-        else if (!checkDefisInChars(lineArr)) {
-            console.log(3);
+        } else if (!checkDefisInChars(lineArr)) {
+            // console.log(3);
             return false;
-        }
-        else if (!checkCommaInChars(lineArr)) {
-            console.log(4);
+        } else if (!checkCommaInChars(lineArr)) {
+            // console.log(4);
             return false;
-        }
-        else if (!checkSlashInChars(lineArr)) {
-            console.log(5);
+        } else if (!checkSlashInChars(lineArr)) {
+            // console.log(5);
             return false;
-        }
-        else if (!checkUsuallyVals(lineArr)) {
-            console.log(6);
+        } else if (!checkUsuallyVals(lineArr)) {
+            // console.log(6);
             return false;
         }
 
         return true;
-    }
+    };
 
     const onChangeHandler = useCallback(
         (ev) => {
-            const curLine = ev.target.value
-                .replace(/[^0-9*\/,\-A-Z\s]/g, '')
-                .replace(/ +/g, " ")
-                // .trim()
+            let curLine = ev.target.value.replace(/[^0-9*\/,\-A-Z\s]/g, "");
 
-            setValidity(checkValidity(curLine));
+            let isValid = checkValidity(curLine);
+
+            setValidity(isValid);
 
             if (isValid) {
-                dispatch(changeLine({ line: curLine, index }));
-            } else {
-                return;
+                dispatch(
+                    changeLine({
+                        line: curLine.replace(/ +/g, " ").trim(),
+                        index,
+                    })
+                );
             }
+            setLocalLine(curLine);
         },
         [id, index]
     );
@@ -95,7 +104,7 @@ const CronInput = ({ id, index, line, inputs }) => {
             className="cron-input"
             type="text"
             autoComplete="off"
-            value={localLines[index]}
+            value={localLine}
             onChange={onChangeHandler}
             onScroll={onScrollHandler}
         />

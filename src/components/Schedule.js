@@ -10,7 +10,12 @@ export const ScheduleTypeItem = ({ value }) => {
     let isActive = scheduleType.type === value;
 
     return (
-        <div className="item" onClick={() => dispatch(setScheduleType({...scheduleType, type: value}))}>
+        <div
+            className="item"
+            onClick={() =>
+                dispatch(setScheduleType({ ...scheduleType, type: value }))
+            }
+        >
             <div className={isActive ? "radio active" : "radio"}></div>
             <input
                 className="is-hidden"
@@ -34,7 +39,9 @@ const Schedule = () => {
             <div className="sidebar">
                 <div className="types">
                     {scheduleTypes.map((item, index) => {
-                        return <ScheduleTypeItem key={index} value={item.type} />;
+                        return (
+                            <ScheduleTypeItem key={index} value={item.type} />
+                        );
                     })}
                 </div>
             </div>

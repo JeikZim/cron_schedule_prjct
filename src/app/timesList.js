@@ -17,13 +17,13 @@ export const timesListSlice = createSlice({
                 });
         },
         setTime: (state, action) => {
-            const id = action.payload.id
-            const hours = action.payload.hours
-            const minutes = action.payload.minutes
+            const id = action.payload.id;
+            const hours = action.payload.hours;
+            const minutes = action.payload.minutes;
 
-            state.value[id - 1].hours = hours
-            state.value[id - 1].minutes = minutes
-        }
+            state.value[id - 1].hours = hours;
+            state.value[id - 1].minutes = minutes;
+        },
     },
 });
 

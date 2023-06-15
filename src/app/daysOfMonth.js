@@ -6,7 +6,7 @@ export const daysOfMonthSlice = createSlice({
         value: {
             mode: "by-days-of-months",
             eachDays: 1,
-            days: []
+            days: [],
         },
     },
     reducers: {
@@ -15,7 +15,9 @@ export const daysOfMonthSlice = createSlice({
         },
         removeDayOfMonth: (state, action) => {
             if (state.value.days.includes(action.payload)) {
-                state.value.days = state.value.days.filter((el) => el !== action.payload);
+                state.value.days = state.value.days.filter(
+                    (el) => el !== action.payload
+                );
             }
         },
         setEachDaysOfMonth: (state, action) => {
@@ -25,11 +27,16 @@ export const daysOfMonthSlice = createSlice({
             state.value = {
                 ...state.value,
                 mode: action.payload.mode,
-            }
-        }
+            };
+        },
     },
 });
 
-export const { addDayOfMonth, removeDayOfMonth, setEachDaysOfMonth, setDaysOfMonthMode } = daysOfMonthSlice.actions;
+export const {
+    addDayOfMonth,
+    removeDayOfMonth,
+    setEachDaysOfMonth,
+    setDaysOfMonthMode,
+} = daysOfMonthSlice.actions;
 
 export default daysOfMonthSlice.reducer;

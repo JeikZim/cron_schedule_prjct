@@ -4,6 +4,7 @@ export const cronLocalLinesSlice = createSlice({
     name: "cronLocalLines",
     initialState: {
         value: ["* * * * *"],
+        isValid: true,
     },
     reducers: {
         changeLine: (state, action) => {
@@ -16,9 +17,13 @@ export const cronLocalLinesSlice = createSlice({
             tmp[action.payload.index] = action.payload.line;
             state.value = tmp;
         },
+        setValidityGlobal: (state, action) => {
+            state.isValid = action.payload;
+        },
     },
 });
 
-export const { setLocalLines, changeLine } = cronLocalLinesSlice.actions;
+export const { setLocalLines, changeLine, setValidityGlobal } =
+    cronLocalLinesSlice.actions;
 
 export default cronLocalLinesSlice.reducer;
