@@ -19,6 +19,12 @@
     background: lighten($btn-input-bg, 7.5%)
     box-sizing: content-box
 
+    &:hover 
+        background: lighten($btn-input-bg, 12.5%)
+
+    &:active 
+        background: lighten($btn-input-bg, 15%)
+
 @mixin list-padding($itemCount, $item-size)
     padding: 0 math.div(($content-width - 2 * $block-ver-padding - $itemCount * $item-size), 2)
     
