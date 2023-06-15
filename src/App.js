@@ -1,6 +1,6 @@
-import React from 'react';
-import Schedule from './components/Schedule';
-import CronLine from './components/CronLine';
+import React from "react";
+import Schedule from "./components/Schedule";
+import CronLine from "./components/CronLine";
 import SaveLoadButtons from "./components/SaveLoadButtons";
 
 function App() {
@@ -10,8 +10,7 @@ function App() {
             <SaveLoadButtons />
             <CronLine />
         </div>
-    )
+    );
 }
 
 export default App;
-

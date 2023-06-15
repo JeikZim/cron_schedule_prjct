@@ -25,11 +25,7 @@ const SaveLoadButtons = () => {
 
     return (
         <div className="btn-group">
-            <Button
-                isActive={isValidGlobal}
-                name="Load"
-                onClick={loadSchedule}
-            />
+            <Button isActive={isValidGlobal} name="Load" onClick={loadSchedule} />
             <Button isActive={true} name="Save" onClick={saveSchedule} />
         </div>
     );

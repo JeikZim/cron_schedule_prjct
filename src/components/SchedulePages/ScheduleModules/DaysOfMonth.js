@@ -110,11 +110,7 @@ export const DaysOfMonthList = ({ isActive }) => {
             {isActive ? true : <div className="locker" />}
             {monthDaysArr.map((num) => {
                 return (
-                    <DaysOfMonthItem
-                        key={num}
-                        id={num}
-                        isActive={isActive}
-                    />
+                    <DaysOfMonthItem key={num} id={num} isActive={isActive} />
                 );
             })}
         </div>

@@ -17,22 +17,11 @@ export const cronLinesSlice = createSlice({
         },
     },
     reducers: {
-        // changeMinutes: (state, action) => {
-        // },
-        // changeHours: (state, action) => {
-        // },
-        // changeDaysOfMonth: (state, action) => {
-        // },
-        // changeMonth: (state, action) => {
-        // },
-        // changeDaysOfWeek: (state, action) => {
-        // },
         setLines: (state, action) => {
             if (action.payload.lines.length === 0) {
                 state.value = { lines: ["* * * * *"], linesCount: 1 };
                 return;
             }
-            // let cronExample = state.value.lines[0].replace(/ +/g, ' ').trim().split(' ');
 
             let lines = [];
             for (let i = 0; i < action.payload.lines.length; i++) {

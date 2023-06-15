@@ -166,9 +166,7 @@ const AtTimeBlock = ({ needRadio }) => {
                 }
             >
                 {needRadio && (
-                    <div
-                        className={isActive ? "radio active" : "radio"}
-                    />
+                    <div className={isActive ? "radio active" : "radio"} />
                 )}
                 At time by number
             </h1>
