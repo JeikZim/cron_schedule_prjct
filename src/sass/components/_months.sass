@@ -1,21 +1,10 @@
-.months-list
-    display: flex
-    justify-content: center
-    align-items: center
-    flex-wrap: wrap
+@import ../mixines/list.mixines
 
-    box-sizing: border-box
-    width: $content-width - 2 * $block-ver-padding //6 * $months-item-size
-    margin: math.div($block-ver-padding, 2) 0
-    padding: 0 math.div(($content-width - 2 * $block-ver-padding - 6 * $months-item-size), 2)
+.months-list
+    @include list(center)
+    @include list-padding(6, $months-item-size)
     
-    border-top: 1px solid black
-    border-bottom: 1px solid black
     
 .months-item
-    height: $months-item-size
-    width: $months-item-size
-
-    background: lighten($btn-input-bg, 7.5%)
-    box-sizing: content-box
+    @include list-item($months-item-size)
 

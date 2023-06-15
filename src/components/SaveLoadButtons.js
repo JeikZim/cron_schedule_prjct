@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { scheduleTypes } from "../app/availableStates";
-import { setLine } from "../app/cronLine";
+import { setLines } from "../app/cronLines";
 import {
     commonTimeConvertor,
     commonDaysConvertor,
@@ -21,10 +21,15 @@ const SaveLoadButtons = () => {
     const daysOfWeek = useSelector((state) => state.daysOfWeek.value);
     const months = useSelector((state) => state.months.value);
     const localLines = useSelector((state) => state.cronLocalLines.value);
+    const isValidGlobal = useSelector((state) => state.cronLocalLines.isValid);
 
     return (
         <div className="btn-group">
-            <Button isActive={true} name="Load" onClick={loadSchedule} />
+            <Button
+                isActive={isValidGlobal}
+                name="Load"
+                onClick={loadSchedule}
+            />
             <Button isActive={true} name="Save" onClick={saveSchedule} />
         </div>
     );
@@ -47,7 +52,7 @@ const SaveLoadButtons = () => {
                     { eachMinutes, times }
                 );
 
-                dispatch(setLine({ lines }));
+                dispatch(setLines({ lines }));
                 break;
 
             // Weekly
@@ -60,7 +65,7 @@ const SaveLoadButtons = () => {
                 );
                 lines = daysOfWeekConvertor(lines, daysOfWeek);
 
-                dispatch(setLine({ lines }));
+                dispatch(setLines({ lines }));
                 break;
 
             // Monthly
@@ -79,7 +84,7 @@ const SaveLoadButtons = () => {
                 );
                 lines = monthsConvertor(lines, months);
 
-                dispatch(setLine({ lines }));
+                dispatch(setLines({ lines }));
                 break;
 
             // Custom
@@ -99,7 +104,7 @@ const SaveLoadButtons = () => {
                 lines = daysOfWeekConvertor(lines, daysOfWeek);
                 lines = monthsConvertor(lines, months);
 
-                dispatch(setLine({ lines }));
+                dispatch(setLines({ lines }));
                 break;
 
             default:
@@ -108,9 +113,30 @@ const SaveLoadButtons = () => {
         }
     }
 
-    function loadSchedule() {
-        // cronLine
-        // .replace(/ +/g, ' ').trim().split(' ');
+    async function loadSchedule() {
+        if (!isValidGlobal) return;
+
+        try {
+            const body = JSON.stringify({ cronLines: localLines });
+
+            let response = await fetch("/api/cron/create", {
+                method: "POST",
+                body,
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Request error.");
+            }
+
+            return data;
+        } catch (err) {
+            console.log(err);
+        }
     }
 };
 

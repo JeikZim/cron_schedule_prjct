@@ -1,23 +1,14 @@
+@import ../mixines/list.mixines
+
 .days-of-week-list
-    display: flex
-    justify-content: center
-    width: 100%
-    box-sizing: border-box
+    @include list(center)
 
-    margin: math.div($block-ver-padding, 2) 0
     // padding: 0 math.div($days-of-week-item-size, 6)
-
-    border-top: $list-border
-    border-bottom: $list-border
     // background: lighten($btn-input-bg, 7.5%)
     // border-radius: math.div($days-of-week-item-size, 12)
 
 .days-of-week-item
-    height: $days-of-week-item-size
-    width: $days-of-week-item-size
-
-    background: lighten($btn-input-bg, 7.5%)
-    box-sizing: content-box
+    @include list-item($days-of-week-item-size)
 
     -moz-background-clip: content  
     -webkit-background-clip: content

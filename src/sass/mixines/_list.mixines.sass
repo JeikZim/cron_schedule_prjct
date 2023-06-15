@@ -1,0 +1,24 @@
+@mixin list($list-justify-content: center)
+    display: flex
+    justify-content: $list-justify-content
+    align-items: center
+    flex-wrap: wrap
+
+    box-sizing: border-box
+    width: 100%
+    
+    margin: math.div($block-ver-padding, 2) 0
+
+    border-top: $list-border
+    border-bottom: $list-border
+
+@mixin list-item($item-size)
+    height: $item-size
+    width: $item-size
+
+    background: lighten($btn-input-bg, 7.5%)
+    box-sizing: content-box
+
+@mixin list-padding($itemCount, $item-size)
+    padding: 0 math.div(($content-width - 2 * $block-ver-padding - $itemCount * $item-size), 2)
+    

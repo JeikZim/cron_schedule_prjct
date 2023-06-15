@@ -1,9 +1,9 @@
 import React from "react";
-import Months from "./ScheduleModules/Months";
-import DaysOfMonth from "./ScheduleModules/DaysOfMonth";
-import DaysOfWeek from "./ScheduleModules/DaysOfWeek";
 import EachMinutes from "./ScheduleModules/EachMinutes";
 import AtTime from "./ScheduleModules/AtTime";
+import DaysOfMonth from "./ScheduleModules/DaysOfMonth";
+import DaysOfWeek from "./ScheduleModules/DaysOfWeek";
+import Months from "./ScheduleModules/Months";
 
 const Custom = () => {
     return (

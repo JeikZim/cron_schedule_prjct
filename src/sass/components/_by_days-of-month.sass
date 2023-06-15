@@ -1,22 +1,8 @@
-.days-of-month-list
-    position: relative
-    display: flex
-    justify-content: flex-start
-    align-items: center
-    flex-wrap: wrap
+@import ../mixines/list.mixines
 
-    box-sizing: border-box
-    width: $content-width - 2 * $block-ver-padding
-    margin: math.div($block-ver-padding, 2) 0
-    padding: 0 math.div(($content-width - 2 * $block-ver-padding - 7 * $day-of-month-item-size), 2)
-    
-    border-top: 1px solid black
-    border-bottom: 1px solid black
+.days-of-month-list
+    @include list(flex-start)
+    @include list-padding(7, $day-of-month-item-size)
     
 .days-of-month-item
-    height: $day-of-month-item-size
-    width: $day-of-month-item-size
-
-    background: lighten($btn-input-bg, 7.5%)
-    box-sizing: content-box
-    
+    @include list-item($day-of-month-item-size)

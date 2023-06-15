@@ -10,8 +10,21 @@
     border-radius: 0.25em
     background-color: $btn-bg
 
-.btn:hover
+.btn:not(.is-disabled):hover
     background-color: $btn-hover-bg
 
-.btn:active
+.btn:not(.is-disabled):active
     background-color: $btn-active-bg
+
+// .btn:focus
+//     outline: none
+//     border: $list-border
+//     border-width: 2px
+    
+// .schedule .btn:focus
+//     border: 2px solid white
+//     border-width: 2px
+    
+// .btn.is-disabled:focus
+//     outline: none
+//     border: 2px solid white

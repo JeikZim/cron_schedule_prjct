@@ -19,7 +19,7 @@ const CronInput = ({ id, index, line, inputs }) => {
     const [isValid, setValidity] = useState(true);
 
     const dispatch = useDispatch();
-    const cronData = useSelector((state) => state.cronLine.value);
+    const cronData = useSelector((state) => state.cronLines.value);
 
     const showInvalidity = useCallback(() => {
         document.getElementById("cron-input-" + id).classList.add("is-invalid");
@@ -34,13 +34,17 @@ const CronInput = ({ id, index, line, inputs }) => {
     });
 
     useEffect(() => {
+        setValidity(true);
+    }, [cronData]);
+
+    useEffect(() => {
         dispatch(setValidityGlobal(isValid));
-    }, [isValid]);
+    }, [dispatch, isValid]);
 
     useEffect(() => {
         setLocalLine(line);
         dispatch(changeLine({ line, index }));
-    }, [cronData]);
+    }, [dispatch, index, line, cronData]);
 
     const checkValidity = (line) => {
         const lineArr = line.replace(/ +/g, " ").trim().split(" ");
@@ -70,7 +74,7 @@ const CronInput = ({ id, index, line, inputs }) => {
 
     const onChangeHandler = useCallback(
         (ev) => {
-            let curLine = ev.target.value.replace(/[^0-9*\/,\-A-Z\s]/g, "");
+            let curLine = ev.target.value.replace(/[^0-9*/,\-A-Z\s]/g, "");
 
             let isValid = checkValidity(curLine);
 
@@ -86,7 +90,7 @@ const CronInput = ({ id, index, line, inputs }) => {
             }
             setLocalLine(curLine);
         },
-        [id, index]
+        [dispatch, index]
     );
 
     const onScrollHandler = useCallback(() => {
@@ -96,7 +100,7 @@ const CronInput = ({ id, index, line, inputs }) => {
         inputs.forEach((input) => {
             input.scrollLeft = scrollLeft;
         });
-    }, [id, inputs, isValid]);
+    }, [id, inputs]);
 
     return (
         <input
@@ -112,7 +116,7 @@ const CronInput = ({ id, index, line, inputs }) => {
 };
 
 const CronLine = () => {
-    const cronData = useSelector((state) => state.cronLine.value);
+    const cronData = useSelector((state) => state.cronLines.value);
     const [inputs, setInputs] = useState([]);
 
     useEffect(() => {

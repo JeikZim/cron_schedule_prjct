@@ -143,7 +143,7 @@ const checkComma = (el, minVal, maxVal, compareRules=null) => {
             } 
             else if (typeof tmp[0] === 'string') {
                 let isInList = false;
-                let number = null;
+                // let number = null;
 
                 try {
                     for (let i = 0; i < compareRules.length; i++) {
@@ -151,7 +151,7 @@ const checkComma = (el, minVal, maxVal, compareRules=null) => {
                         
                         if (tmp[0] === obj.name) {
                             isInList = true;
-                            number = obj.id;
+                            // number = obj.id;
                         }
                     }
                 } catch (err) {
@@ -256,7 +256,7 @@ const checkUsually = (el, minVal, maxVal, compareRules = []) => {
         } 
         else if (typeof el === 'string') {
             let isInList = false;
-            let number = null;
+            // let number = null;
     
             try {
                 for (let i = 0; i < compareRules.length; i++) {
@@ -264,7 +264,7 @@ const checkUsually = (el, minVal, maxVal, compareRules = []) => {
                     
                     if (el === obj.name) {
                         isInList = true;
-                        number = obj.id;
+                        // number = obj.id;
                     }
                 }
             } catch (err) {

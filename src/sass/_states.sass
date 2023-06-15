@@ -1,25 +1,31 @@
+$is-invalid-color: #ff333355
+$is-chosen-color: #f4f4f4
+
 .is-hidden
     display: none
 
 .is-disabled
-    color: darken($main-color, 25%) !important
+    color: darken($is-chosen-color, 25%) !important
 
 button.is-disabled
     background-color: grey
 
 .is-chosen
-    color: darken($main-color, 90%) !important
+    color: darken($is-chosen-color, 90%) !important
+
+    & span
+        font-weight: 700 !important
 
 .is-invalid 
-    background-color: #ff29297c !important
+    background-color: $is-invalid-color !important
 
 .is-invalid::-webkit-scrollbar
-    background: #ff29297c !important
+    background: $is-invalid-color !important
 
 .days-of-week-item.is-chosen, 
 .months-item.is-chosen, 
 .days-of-month-item.is-chosen
-    background-color: #f4f4f4 !important
+    background-color: $is-chosen-color !important
 
 .locker
     position: absolute

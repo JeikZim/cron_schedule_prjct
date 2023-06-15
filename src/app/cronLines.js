@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const cronLineSlice = createSlice({
-    name: "cronLine",
+export const cronLinesSlice = createSlice({
+    name: "cronLines",
     initialState: {
         value: {
             lines: [
@@ -27,7 +27,7 @@ export const cronLineSlice = createSlice({
         // },
         // changeDaysOfWeek: (state, action) => {
         // },
-        setLine: (state, action) => {
+        setLines: (state, action) => {
             if (action.payload.lines.length === 0) {
                 state.value = { lines: ["* * * * *"], linesCount: 1 };
                 return;
@@ -59,6 +59,6 @@ export const cronLineSlice = createSlice({
     },
 });
 
-export const { setLine } = cronLineSlice.actions;
+export const { setLines } = cronLinesSlice.actions;
 
-export default cronLineSlice.reducer;
+export default cronLinesSlice.reducer;
