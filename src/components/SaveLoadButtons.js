@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { scheduleTypes } from "../app/availableStates";
 import { setLines } from "../app/cronLines";
@@ -9,6 +9,7 @@ import {
     monthsConvertor,
 } from "../lib/convertors";
 import Button from "../components/Button";
+import { logDOM } from "@testing-library/react";
 
 const SaveLoadButtons = () => {
     const dispatch = useDispatch();
@@ -22,10 +23,15 @@ const SaveLoadButtons = () => {
     const months = useSelector((state) => state.months.value);
     const localLines = useSelector((state) => state.cronLocalLines.value);
     const isValidGlobal = useSelector((state) => state.cronLocalLines.isValid);
+    const [loadActive, setLoadActive] = useState(true)
+
+    // useEffect(() => {
+    //     setLoadActive(isValidGlobal);
+    // })
 
     return (
         <div className="btn-group">
-            <Button isActive={isValidGlobal} name="Load" onClick={loadSchedule} />
+            <Button isActive={loadActive} name="Load" onClick={loadSchedule} />
             <Button isActive={true} name="Save" onClick={saveSchedule} />
         </div>
     );
@@ -110,7 +116,10 @@ const SaveLoadButtons = () => {
     }
 
     async function loadSchedule() {
+        console.log(isValidGlobal);
         if (!isValidGlobal) return;
+
+        setLoadActive(false);
 
         try {
             const body = JSON.stringify({ cronLines: localLines });
@@ -122,13 +131,18 @@ const SaveLoadButtons = () => {
                     "Content-Type": "application/json;charset=utf-8",
                 },
             });
+            console.log(response);
 
             const data = await response.json();
+
+            console.log(data);
 
             if (!response.ok) {
                 throw new Error(data.message || "Request error.");
             }
 
+
+            setLoadActive(true);
             return data;
         } catch (err) {
             console.log(err);

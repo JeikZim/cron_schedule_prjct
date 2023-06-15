@@ -9,6 +9,8 @@ router.post("/create", cronLineValidation, (req, res) => {
     // ...Implementation of saving CRON rows to the database for further use
 
     console.log(cronLines);
+
+    return res.status(200).json({ message: "Lines was created" });
 });
 
 module.exports = router;
