@@ -9,12 +9,14 @@ export const ScheduleTypeItem = ({ value }) => {
     const dispatch = useDispatch();
     let isActive = scheduleType.type === value;
 
+    const onClickHandler = () => {
+        dispatch(setScheduleType({ ...scheduleType, type: value }))
+    }
+
     return (
         <div
             className="item"
-            onClick={() =>
-                dispatch(setScheduleType({ ...scheduleType, type: value }))
-            }
+            onClick={onClickHandler}
         >
             <div className={isActive ? "radio active" : "radio"}></div>
             <input

@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { scheduleTypes } from "../app/availableStates";
-import { setLines } from "../app/cronLines";
+import { fillingListData, fillingNamedData } from "../lib/fillingData"
 import {
     commonTimeConvertor,
     commonDaysConvertor,
     daysOfWeekConvertor,
     monthsConvertor,
 } from "../lib/convertors";
+import {
+    scheduleTypes,
+    daysOfWeekArr,
+    monthsArr,
+} from "../app/availableStates";
+import { setScheduleType, setScheduleMode } from "../app/scheduleType";
+import { setLines } from "../app/cronLines";
+import { setValue as setEachMinutes } from "../app/eachMinutes";
+import { setTime, setMinutes, setHours } from "../app/timesList";
+import { setDaysOfMonth, setEachDaysOfMonth } from "../app/daysOfMonth";
+import { setEachMonths, setMonths } from "../app/months";
+import { setDaysOfWeek, setEachDayOfWeek } from "../app/daysOfWeek";
 import Button from "../components/Button";
-import { logDOM } from "@testing-library/react";
 
 const SaveLoadButtons = () => {
     const dispatch = useDispatch();
@@ -23,11 +33,11 @@ const SaveLoadButtons = () => {
     const months = useSelector((state) => state.months.value);
     const localLines = useSelector((state) => state.cronLocalLines.value);
     const isValidGlobal = useSelector((state) => state.cronLocalLines.isValid);
-    const [loadActive, setLoadActive] = useState(true)
+    const [loadActive, setLoadActive] = useState(true);
 
     useEffect(() => {
         setLoadActive(isValidGlobal);
-    }, [isValidGlobal])
+    }, [isValidGlobal]);
 
     return (
         <div className="btn-group">
@@ -116,7 +126,6 @@ const SaveLoadButtons = () => {
     }
 
     async function loadSchedule() {
-        console.log(isValidGlobal);
         if (!isValidGlobal) return;
 
         setLoadActive(false);
@@ -131,22 +140,87 @@ const SaveLoadButtons = () => {
                     "Content-Type": "application/json;charset=utf-8",
                 },
             });
-            console.log(response);
 
             const data = await response.json();
-
-            console.log(data);
 
             if (!response.ok) {
                 throw new Error(data.message || "Request error.");
             }
 
+            console.log(data);
+
+            let line = data.lines[0];
+            line = line.split(" ");
+
+            filledScheduleData(line);
+            // for (let i = 0; i < data.lines.length; i++) {
+            //     const line = data.lines[i];
+            //     line = line.split(' ');
+
+            //    findFormat(line)
+
+            // }
 
             setLoadActive(true);
             return data;
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
+    }
+
+    function filledScheduleData(line) {
+        const minutes = line[0];
+        const hours = line[1];
+        const daysOfMonth = line[2];
+        const months = line[3];
+        const daysOfWeek = line[4];
+
+        dispatch(setScheduleType({ type: "Custom" }));
+
+        if (minutes === "*" && hours === "*") {
+            dispatch(setScheduleMode({ mode: "each-min" }));
+            dispatch(setEachMinutes(1));
+        } else {
+            dispatch(setScheduleMode({ mode: "at-time" }));
+            fillingListData(dispatch, minutes, 0, 59, setMinutes);
+            fillingListData(dispatch, hours, 0, 23, setHours);
+        }
+
+        if (daysOfMonth === "*") {
+            dispatch(setScheduleMode({ mode: "each-days-of-month" }));
+            dispatch(setEachDaysOfMonth(1));
+        } else {
+            fillingListData(
+                dispatch,
+                daysOfMonth,
+                1,
+                31,
+                setDaysOfMonth,
+                setEachDaysOfMonth
+            );
+        }
+
+        fillingNamedData(dispatch,months, 1, 12, monthsArr, setMonths, setEachMonths);
+        fillingNamedData(
+            dispatch,
+            daysOfWeek,
+            1,
+            7,
+            daysOfWeekArr,
+            setDaysOfWeek,
+            setEachDayOfWeek
+        );
+
+        // TODO: исправить тот момент, что все пары не перемножаются, 
+        // TODO: а просто расставляются подряд кто с кем (про минуты и часы)
+
+        // TODO: Заблокировать для редактирования все строки кроме первой
+
+        // TODO: Изменить действия изменения минут и часов,
+        // TODO: минуты должны заполнять линии по длине payload,
+        // TODO: а часы умножать количество строк, то есть 1,2 и 3,4 = 1,3 1,4 2,3 2,4.
+        // TODO: Таким образом будет охвачен весь диапазон значений.
+    
     }
 };
 

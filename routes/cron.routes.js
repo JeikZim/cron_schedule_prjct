@@ -10,7 +10,7 @@ router.post("/create", cronLineValidation, (req, res) => {
 
     console.log(cronLines);
 
-    return res.status(200).json({ message: "Lines was created" });
+    return res.status(200).json({ message: "Lines was created", lines: cronLines });
 });
 
 module.exports = router;

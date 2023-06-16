@@ -30,7 +30,7 @@ export const checkDefisInChars = (arr) => {
     checkedFields[1] = checkDefises(arr[1], 0, 23);
     checkedFields[2] = checkDefises(arr[2], 1, 31);
     checkedFields[3] = checkDefises(arr[3], 1, 12, monthsArr);
-    checkedFields[4] = checkDefises(arr[4], 0, 6, daysOfWeekArr);
+    checkedFields[4] = checkDefises(arr[4], 1, 7, daysOfWeekArr);
 
     for (let i = 0; i < checkedFields.length; i++) {
         const el = checkedFields[i];

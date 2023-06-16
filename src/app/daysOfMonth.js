@@ -20,6 +20,17 @@ export const daysOfMonthSlice = createSlice({
                 );
             }
         },
+        setDaysOfMonth: (state, action) => {
+            state.value.mode = 'by-days-of-months';
+
+            if (action.payload === '*') {
+                state.value.days = [];
+                return;
+            }
+
+            state.value.days = action.payload;
+
+        },
         setEachDaysOfMonth: (state, action) => {
             state.value.eachDays = action.payload;
         },
@@ -37,6 +48,7 @@ export const {
     removeDayOfMonth,
     setEachDaysOfMonth,
     setDaysOfMonthMode,
+    setDaysOfMonth
 } = daysOfMonthSlice.actions;
 
 export default daysOfMonthSlice.reducer;

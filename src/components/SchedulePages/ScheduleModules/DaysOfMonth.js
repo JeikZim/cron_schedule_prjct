@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setScheduleMode } from "../../../app/scheduleType";
 import { monthDaysArr } from "../../../app/availableStates";
@@ -46,7 +46,7 @@ export const EachDays = ({ needRadio }) => {
                         : () => {}
                 }
             >
-                {!isActive && <div className="locker" />}
+                {isActive ? null : <div className="locker" />}
                 Each{" "}
                 <input
                     id={mode + "-input"}
@@ -87,7 +87,7 @@ export const EachDays = ({ needRadio }) => {
 
 export const DaysOfMonthItem = ({ id, isActive }) => {
     const daysOfMonth = useSelector((state) => state.daysOfMonth.value);
-    let isChosen = daysOfMonth.days.includes(id);
+    let isChosen = daysOfMonth.days.includes(id) || daysOfMonth.days.includes(String(id));
     const dispatch = useDispatch();
 
     const toggleChose = () => {
@@ -107,7 +107,7 @@ export const DaysOfMonthItem = ({ id, isActive }) => {
 export const DaysOfMonthList = ({ isActive }) => {
     return (
         <div className="days-of-month-list">
-            {isActive ? true : <div className="locker" />}
+            {isActive ? null : <div className="locker" />}
             {monthDaysArr.map((num) => {
                 return (
                     <DaysOfMonthItem key={num} id={num} isActive={isActive} />

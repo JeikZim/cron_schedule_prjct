@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../Button";
 import { setScheduleMode } from "../../../app/scheduleType";
@@ -15,44 +15,60 @@ export const AtTimeItem = ({ id, isActive }) => {
     });
 
     const changeHoursHandler = (ev) => {
-        const val = ev.target.value.replace(/[^0-9]/, "");
+        const hours = ev.target.value.replace(/[^0-9*]/, "");
         const minutes = time.minutes;
 
-        if (val.length > 2) {
-            if (Number(val) === 0) {
-                dispatch(setTime({ id, hours: "00", minutes }));
-            } else {
-                const minutes = val[val.length - 1];
-                const hours = val.slice(0, 2);
+        if (hours.includes('*')) {
 
-                dispatch(setTime({ id, hours, minutes }));
+            if (time.hours.includes('*')) {
+                return;
             }
-        } else if (Number(val) > 23) {
-            dispatch(setTime({ id, hours: 23, minutes }));
-        } else {
-            dispatch(setTime({ id, hours: val, minutes }));
+
+            dispatch(setTime({ id, hours: "*", minutes }));
         }
 
-        val.length >= 2 && minutesInputDOM.focus();
+        if (hours.length > 2) {
+            if (Number(hours) === 0) {
+                dispatch(setTime({ id, hours: "00", minutes }));
+            } else {
+                const minutes = hours[hours.length - 1];
+                dispatch(setTime({ id, hours: hours.slice(0, 2), minutes }));
+            }
+        } else if (Number(hours) > 23) {
+            dispatch(setTime({ id, hours: 23, minutes }));
+        } else {
+            dispatch(setTime({ id, hours, minutes }));
+        }
+
+        hours.length >= 2 && minutesInputDOM.focus();
     };
 
     const changeMinutesHandler = (ev) => {
-        const val = ev.target.value.replace(/[^0-9]/, "");
+        const minutes = ev.target.value.replace(/[^0-9*]/, "");
         const hours = time.hours;
 
-        if (val.length > 2) {
-            if (Number(val) === 0) {
-                dispatch(setTime({ id, hours, minutes: "00" }));
-            } else {
-                dispatch(setTime({ id, hours, minutes: val.slice(0, 2) }));
+        if (minutes.includes('*')) {
+
+            if (time.minutes.includes('*')) {
+                return;
             }
-        } else if (Number(val) > 59) {
-            dispatch(setTime({ id, hours, minutes: 59 }));
-        } else {
-            dispatch(setTime({ id, hours, minutes: val }));
+
+            dispatch(setTime({ id, hours, minutes: "*" }));
         }
 
-        val.length > 2 && minutesInputDOM.blur();
+        if (minutes.length > 2) {
+            if (Number(minutes) === 0) {
+                dispatch(setTime({ id, hours, minutes: "00" }));
+            } else {
+                dispatch(setTime({ id, hours, minutes: minutes.slice(0, 2) }));
+            }
+        } else if (Number(minutes) > 59) {
+            dispatch(setTime({ id, hours, minutes: 59 }));
+        } else {
+            dispatch(setTime({ id, hours, minutes }));
+        }
+
+        minutes.length > 2 && minutesInputDOM.blur();
     };
 
     const removeHandler = (ev) => dispatch(removeTime({ id }));
@@ -124,7 +140,7 @@ export const AtTimeList = ({ isActive }) => {
 
     return (
         <div className="at-time-list">
-            {isActive ? true : <div className="locker" />}
+        {isActive ? null : <div className="locker" />}
             <div className="add">
                 <Button
                     isActive={isActive}
