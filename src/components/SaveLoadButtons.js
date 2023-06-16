@@ -164,11 +164,33 @@ const SaveLoadButtons = () => {
         const months = line[3];
         const daysOfWeek = line[4];
 
-        dispatch(setScheduleType({ type: "Custom" }));
+        if (daysOfMonth === "*" && months === "*" && daysOfWeek === "*") {
+            dispatch(setScheduleType({ type: "Daily" }));
+        } 
+        else if (daysOfMonth === "*" && months === "*") {
+            dispatch(setScheduleType({ type: "Weekly" }));
+        } 
+        else if (daysOfWeek === "*") {
+            dispatch(setScheduleType({ type: "Monthly" }));
+        }
+        else {
+            dispatch(setScheduleType({ type: "Custom" }));
+        }
 
         if (minutes === "*" && hours === "*") {
             dispatch(setScheduleMode({ mode: "each-min" }));
             dispatch(setEachMinutes(1));
+        }
+        else if (minutes.startsWith("*/") && hours === "*") {
+            dispatch(setScheduleMode({ mode: "each-min" }));
+            let tmp = minutes.split('/')[1];;
+
+            if (Number(tmp) > 60) {
+                dispatch(setEachMinutes(60));
+                
+            } else {
+                dispatch(setEachMinutes(tmp));
+            }
         } else {
             dispatch(setScheduleMode({ mode: "at-time" }));
             fillingListData(dispatch, minutes, 0, 60, setMinutes);
@@ -178,6 +200,17 @@ const SaveLoadButtons = () => {
         if (daysOfMonth === "*") {
             dispatch(setScheduleMode({ mode: "each-days-of-month" }));
             dispatch(setEachDaysOfMonth(1));
+        }
+        else if (daysOfMonth.startsWith("*/")) {
+            dispatch(setScheduleMode({ mode: "each-days-of-month" }));
+            let tmp = daysOfMonth.split('/')[1];;
+
+            if (Number(tmp) > 31) {
+                dispatch(setEachDaysOfMonth(31));
+                
+            } else {
+                dispatch(setEachDaysOfMonth(tmp));
+            }
         } else {
             fillingListData(
                 dispatch,
