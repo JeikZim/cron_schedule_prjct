@@ -46,15 +46,35 @@ export const eachMinutesConvertor = (lines, eachMinutes) => {
 };
 
 export const atTimeConvertor = (lines, times) => {
-    lines[0] = { ...lines[0], minutes: '*', hours: '*' };
 
+    let hours = '';
+    let minutes = '';
+    
     for (let i = 0; i < times.length; i++) {
         const time = times[i];
-        const hours = time.hours;
-        const minutes = time.minutes;
-
-        lines[i] = { ...lines[i], minutes, hours };
+        hours = hours + time.hours + ",";
+        minutes = minutes + time.minutes + ",";
     }
+
+    if (hours.endsWith(',')) {
+        hours = hours.slice(0, hours.length - 1)
+    }
+    if (minutes.endsWith(',')) {
+        minutes = minutes.slice(0, minutes.length - 1)
+    }
+
+    lines[0] = { ...lines[0], minutes: minutes || '*', hours: hours || '*' };
+
+    // lines[0] = { ...lines[0], minutes: '*', hours: '*' };
+
+    // for (let i = 0; i < times.length; i++) {
+    //     const time = times[i];
+    //     const hours = time.hours;
+    //     const minutes = time.minutes;
+
+    //     lines[i] = { ...lines[i], minutes, hours };
+    // }
+
     return lines;
 };
 
