@@ -147,19 +147,8 @@ const SaveLoadButtons = () => {
                 throw new Error(data.message || "Request error.");
             }
 
-            console.log(data);
-
-            let line = data.lines[0];
-            line = line.split(" ");
-
+            let line = data.lines[0].split(" ");
             filledScheduleData(line);
-            // for (let i = 0; i < data.lines.length; i++) {
-            //     const line = data.lines[i];
-            //     line = line.split(' ');
-
-            //    findFormat(line)
-
-            // }
 
             setLoadActive(true);
             return data;
@@ -182,8 +171,8 @@ const SaveLoadButtons = () => {
             dispatch(setEachMinutes(1));
         } else {
             dispatch(setScheduleMode({ mode: "at-time" }));
-            fillingListData(dispatch, minutes, 0, 59, setMinutes);
-            fillingListData(dispatch, hours, 0, 23, setHours);
+            fillingListData(dispatch, minutes, 0, 60, setMinutes);
+            fillingListData(dispatch, hours, 0, 24, setHours);
         }
 
         if (daysOfMonth === "*") {
@@ -210,17 +199,6 @@ const SaveLoadButtons = () => {
             setDaysOfWeek,
             setEachDayOfWeek
         );
-
-        // TODO: исправить тот момент, что все пары не перемножаются, 
-        // TODO: а просто расставляются подряд кто с кем (про минуты и часы)
-
-        // TODO: Заблокировать для редактирования все строки кроме первой
-
-        // TODO: Изменить действия изменения минут и часов,
-        // TODO: минуты должны заполнять линии по длине payload,
-        // TODO: а часы умножать количество строк, то есть 1,2 и 3,4 = 1,3 1,4 2,3 2,4.
-        // TODO: Таким образом будет охвачен весь диапазон значений.
-    
     }
 };
 

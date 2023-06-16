@@ -105,12 +105,13 @@ const CronInput = ({ id, index, line, inputs }) => {
     return (
         <input
             id={"cron-input-" + id}
-            className="cron-input"
+            className={"cron-input" + (id !== 1 ? " is-disabled" : "")}
             type="text"
             autoComplete="off"
             value={localLine}
             onChange={onChangeHandler}
             onScroll={onScrollHandler}
+            disabled={id !== 1}
         />
     );
 };

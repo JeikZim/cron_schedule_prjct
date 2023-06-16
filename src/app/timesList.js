@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import removeDuplicateLines from "../lib/removeDuplicateTimeLines";
 
 export const timesListSlice = createSlice({
     name: "timesList",
@@ -26,88 +27,42 @@ export const timesListSlice = createSlice({
         },
         setMinutes: (state, action) => {
             const lines = [];
-            const maxLength =
-                action.payload.length > state.value.length
-                    ? action.payload.length
-                    : state.value.length;
+            const maxLength = action.payload.length;
 
             for (let i = 0; i < maxLength; i++) {
-                if (!action.payload[i] && !state.value[i]) {
-                    break;
-                }
-
-                if (
-                    state.value[i] && lines[i - 1] &&
-                    (state.value[i].minutes === lines[i - 1].minutes) &&
-                    (state.value[i].hours === lines[i - 1].hours)
-                ) {
-                    break;
-                }
+                if (action.payload[i] == 60) continue;
 
                 lines[i] = {
                     id: i + 1,
-                    hours:
-                        state.value[i] && state.value[i].hours
-                            ? state.value[i].hours
-                            : state.value[state.value.length - 1].hours || "*",
-                    minutes:
-                        action.payload[i] ||
-                        action.payload[action.payload.length - 1] ||
-                        "*",
+                    hours: "*",
+                    minutes: action.payload[i] || "*",
                 };
             }
 
-            console.log(lines);
             state.value = lines;
         },
         setHours: (state, action) => {
-            // const originalLines = state.value;
-            const lines = [];
-            const maxLength =
-                action.payload.length > state.value.length
-                    ? action.payload.length
-                    : state.value.length;
+            let lines = [];
+            let count = 0;
 
-            for (let i = 0; i < maxLength; i++) {
-                if (!action.payload[i] && !state.value[i]) {
-                    break;
+            for (let i = 0; i < action.payload.length; i++) {
+                const localLines = [];
+
+                for (let j = 0; j < state.value.length; j++) {
+                    if (action.payload[i] == 24) continue;
+
+                    count++;
+                    localLines[j] = {
+                        id: count,
+                        hours: action.payload[i] || "*",
+                        minutes: state.value[j].minutes || "*",
+                    };
                 }
 
-                if (
-                    state.value[i] && lines[i - 1] &&
-                    (state.value[i].minutes === lines[i - 1].minutes) &&
-                    (state.value[i].hours === lines[i - 1].hours)
-                ) {
-                    break;
-                }
-
-                lines[i] = {
-                    id: i + 1,
-                    hours:
-                        action.payload[i] ||
-                        action.payload[action.payload.length - 1] ||
-                        "*",
-                    minutes:
-                        state.value[i] && state.value[i].minutes
-                            ? state.value[i].minutes
-                            : state.value[state.value.length - 1].minutes ||
-                              "*",
-                };
+                lines.push(...localLines);
             }
 
-            // originalLines.push(...lines);
-            state.value = lines;
-            // state.value = originalLines;
-        },
-        setAllTimes: (state, action) => {
-            // const lines = action.payload.lines;
-            // for (let i = 0; i < lines.length; i++) {
-            //     const line = lines[i].split(' ');
-            //     const minutes = line[0];
-            //     const hours = line[1];
-            // }
-            // state.value[id - 1].hours = hours;
-            // state.value[id - 1].minutes = minutes;
+            state.value = removeDuplicateLines(lines);
         },
     },
 });

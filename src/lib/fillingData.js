@@ -17,9 +17,19 @@ export function fillingNamedData(
 
     if (timeStr.includes("/")) {
         const tmp = timeStr.split("/");
-        const firstVal = tmp[0];
+        let firstVal = tmp[0];
         let secondVal = tmp[1];
 
+        if (isNaN(firstVal)) {
+            for (let i = 0; i < availableNames.length; i++) {
+                const el = availableNames[i];
+
+                if (el.name === secondVal) {
+                    firstVal = el.id;
+                    break;
+                }
+            }
+        }  
         if (isNaN(secondVal)) {
             for (let i = 0; i < availableNames.length; i++) {
                 const el = availableNames[i];
@@ -29,34 +39,33 @@ export function fillingNamedData(
                     break;
                 }
             }
-        } else {
-            if (secondVal > maxVal) {
-                dispatch(
-                    firstFunc({
-                        ...basicNames,
-                        [availableNames[availableNames.length - 1]
-                            .name]: true,
-                    })
-                );
-                return;
-            }
+        }
+        if ((!isNaN(secondVal) && secondVal > maxVal) || (!isNaN(secondVal) && firstVal > maxVal)) {
+            dispatch(
+                firstFunc({
+                    ...basicNames,
+                    [availableNames[availableNames.length - 1]
+                        .name]: true,
+                })
+            );
+            return;
         }
 
         const obj = {};
         const step = Number(secondVal);
-        let count = 0;
+        const localMinVal = firstVal === '*' ? 1 : firstVal;
+        let count = firstVal === '*' ? 1 : firstVal;
 
-        for (let i = 0; i < Math.floor(maxVal / secondVal); i++) {
-            count += step;
-
+        for (let i = 0; i <= Math.floor((maxVal - localMinVal) / secondVal); i++) {
             for (let j = 0; j < availableNames.length; j++) {
                 const el = availableNames[j];
 
-                if (el.id === count) {
+                if (el.id === Number(count)) {
                     obj[el.name] = true;
                     break;
                 }
             }
+            count = Number(count) + step;
         }
 
         dispatch(firstFunc({ ...basicNames, ...obj }));
@@ -179,25 +188,29 @@ export function fillingNamedData(
 }
 
 export function fillingListData(dispatch, timeStr, minVal, maxVal, ...actions) {
+    const firstFunc = actions[0];
+    const secondFunc = actions[1];
+
     if (timeStr.includes("/")) {
         const tmp = timeStr.split("/");
 
         if (tmp[1] > maxVal) {
-            dispatch(actions[0]([0]));
+            dispatch(firstFunc([0]));
         } else {
             const arr = [];
             const step = Number(tmp[1]);
-            let count = 0;
+            const localMinVal = tmp[0] === '*' ? 0 : tmp[0];
+            let count = tmp[0] === '*' ? '00' : tmp[0];
 
-            for (let i = 0; i < Math.floor(maxVal / tmp[1]); i++) {
-                count += step;
+            for (let i = 0; i <= Math.floor((maxVal - localMinVal) / tmp[1]); i++) {
                 arr[i] = count;
+                count = Number(count) + step;
             }
 
-            dispatch(actions[0](arr));
+            dispatch(firstFunc(arr));
         }
     } else if (timeStr.includes("*")) {
-        dispatch(actions[1] ? actions[1](1) : actions[0](["*"]));
+        dispatch(secondFunc ? secondFunc(1) : firstFunc(["*"]));
     } else if (timeStr.includes("-")) {
         const tmp = timeStr.split("-");
         const arr = [];
@@ -206,12 +219,12 @@ export function fillingListData(dispatch, timeStr, minVal, maxVal, ...actions) {
             arr.push(i);
         }
 
-        dispatch(actions[0](arr));
+        dispatch(firstFunc(arr));
     } else if (timeStr.includes(",")) {
         const arr = timeStr.split(",");
 
-        dispatch(actions[0](arr));
+        dispatch(firstFunc(arr));
     } else {
-        dispatch(actions[0]([timeStr]));
+        dispatch(firstFunc([timeStr]));
     }
 }

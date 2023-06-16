@@ -261,6 +261,9 @@ const checkUsually = (el, minVal, maxVal, compareRules = []) => {
         !el.includes("-")
     ) {
         if (!isNaN(el)) {
+            if (el.length > String(maxVal).length) {
+                return false;
+            }
             if (el > maxVal || el < minVal) {
                 return false;
             }

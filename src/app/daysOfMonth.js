@@ -14,16 +14,16 @@ export const daysOfMonthSlice = createSlice({
             state.value.days.push(action.payload);
         },
         removeDayOfMonth: (state, action) => {
-            if (state.value.days.includes(action.payload)) {
+            if (state.value.days.includes(action.payload) || state.value.days.includes(String(action.payload))) {
                 state.value.days = state.value.days.filter(
-                    (el) => el !== action.payload
+                    el => String(el) !== String(action.payload)
                 );
             }
         },
         setDaysOfMonth: (state, action) => {
             state.value.mode = 'by-days-of-months';
 
-            if (action.payload === '*') {
+            if (action.payload === '*' || action.payload.length >= 31) {
                 state.value.days = [];
                 return;
             }
