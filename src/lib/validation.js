@@ -142,7 +142,7 @@ const checkComma = (el, minVal, maxVal, compareRules = null) => {
 
         for (let i = 0; i < tmp.length; i++) {
             if (!isNaN(tmp[0])) {
-                if (tmp[0] > maxVal || tmp[0] < minVal) {
+                if (Number(tmp[0]) > maxVal || Number(tmp[0]) < minVal) {
                     return false;
                 }
                 return true;
