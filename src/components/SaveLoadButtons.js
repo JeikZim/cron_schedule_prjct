@@ -131,25 +131,24 @@ const SaveLoadButtons = () => {
         setLoadActive(false);
 
         try {
-            // const body = JSON.stringify({ cronLines: localLines });
+            const body = JSON.stringify({ cronLines: localLines });
 
-            // let response = await fetch("/api/cron/create", {
-            //     method: "POST",
-            //     body,
-            //     headers: {
-            //         "Content-Type": "application/json;charset=utf-8",
-            //     },
-            // });
+            let response = await fetch("/api/cron/create", {
+                method: "POST",
+                body,
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+            });
 
-            // const data = await response.json();
+            const data = await response.json();
 
-            // if (!response.ok) {
-            //     throw new Error(data.message || "Request error.");
-            // }
+            if (!response.ok) {
+                throw new Error(data.message || "Request error.");
+            }
 
-            // let line = data.lines[0].split(" ");
-            // filledScheduleData(line);
-            filledScheduleData(localLines);
+            let line = data.lines[0].split(" ");
+            filledScheduleData(line);
 
             setLoadActive(true);
             // return data;
@@ -223,7 +222,7 @@ const SaveLoadButtons = () => {
             );
         }
 
-        fillingNamedData(dispatch,months, 1, 12, monthsArr, setMonths, setEachMonths);
+        fillingNamedData(dispatch, months, 1, 12, monthsArr, setMonths, setEachMonths);
         fillingNamedData(
             dispatch,
             daysOfWeek,
